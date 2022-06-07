@@ -1,0 +1,15 @@
+pyyaml
+dash
+dash-auth
+dash-renderer
+dash-bootstrap-components
+dash-daq
+plotly
+plotly-express
+psycopg2
+dash-html-components
+mysql-connector-python
+scipy
+pandas
+numpy
+gunicorn
