@@ -1,0 +1,233 @@
+#data-in-scene::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  margin-top: -10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+.measure {
+}
+
+.measure::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -30px;
+  margin-top: 16px;
+  border-width: 16px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+#data-in-scene td {
+    padding: 0 5px 0 5px;
+}
+
+#data-in-scene th {
+    padding: 0 5px 0 5px;
+}
+
+.filterWrapper {
+  /* position: absolute; */
+  width: 100%;
+  height: 450px;
+  z-index: 50;
+  top: -450px;
+  left: -15px;
+}
+
+.filterWrapper .layer {
+  position: absolute;
+  width: 100%;
+  background: rgba(150, 150, 150, 0.473);
+  z-index: 60;
+}
+
+.filterWrapper .tick {
+  position: absolute;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  border-style: solid;
+  border-color: black;
+  z-index: 60;
+  cursor: move;
+}
+
+.filterWrapper .layer.top {
+  top: 0;
+}
+
+.filterWrapper .tick.top {
+  top: 0;
+  transform: translateY(-4px);
+}
+
+.filterWrapper .layer.bottom {
+  bottom: 0;
+}
+
+.filterWrapper .tick.bottom {
+  top: 100%;
+  transform: translateY(-4px);
+}
+
+.tableContainer {
+  height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.tableContainer ::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tableContainer table thead th {
+  top: 0;
+  position: sticky;
+  background-color: white;
+}
+
+tr:hover{
+  cursor: pointer;
+}
+
+.tableAlert {
+  width: 40% !important;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.contentContainer {
+  height: 630px;
+}
+
+.sensorsTableContainer{
+  height: 50%;
+}
+
+.sensorsChartContainer {
+  height: 50%;
+  position: fixed;
+}
+
+tr.selected {
+  border: solid;
+  border-color: black;
+  border-width: '15px' ;
+}
+
+.topHalf{
+  height: 50%;
+}
+
+.bottomHalf {
+  height: 50%;
+  position: fixed;
+}
+
+.comparison-filter {
+  padding-top: 50px;
+  /* padding-top: 30px; */
+}
+
+.designRatioTableContanier {
+  padding-left: 50px;
+}
+
+
+/* Risk levels */
+.riskTableContainer td{
+  padding: 8px;
+  text-align: center;
+}
+
+.riskTableContainer tr td:first-of-type{
+  background-color: rgb(197, 197, 197);
+}
+
+.riskTableContainer th:not(:first-child) {
+  background-color:  rgb(197, 197, 197);
+  text-align: center;
+}
+
+.low {
+  background-color: #6dab6a;
+}
+
+.medium {
+  background-color: #fece00;
+}
+
+.high {
+  background-color: #fc831f;
+}
+
+.extreme {
+  background-color: #dc232b;
+}
+
+.box-in-matrix {
+  max-height: 100px;
+  border: 1px solid #8080805e;
+}
+
+.green {
+  background-color: #6dab6a;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.orange {
+  background-color: #fece00;
+}
+
+.red {
+  background-color: #dc232b;
+}
+
+.comparison-select {
+  font-size: 1em;
+  margin-top: 2em;
+}
+
+.options-col {
+  list-style-type:none;
+  margin:25px 0 0 0;
+  padding:0;
+}
+
+.options-col input[type="radio"] {
+  display: none;
+}
+
+.options-col label {
+  padding: 5px;
+  border-radius: 3px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #CCC;
+  cursor: pointer;
+  z-index: 90;
+}
+
+.options-col input[type="radio"]:checked+label,
+.Checked+label {
+  background: #939393;
+  color: white;
+}
+
+.options-col label:hover {
+  background: #DDD;
+}
+
+.padding-top {
+  padding-top: 50px;
+}

@@ -1,0 +1,392 @@
+
+#sidebar {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #ffffff;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+#sidebar:hover {
+  overflow-y: auto;
+  transition:0.3;
+}
+
+/* width */
+#sidebar::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+#sidebar::-webkit-scrollbar-track {
+  background-color: initial;
+}
+
+/* Handle */
+#sidebar::-webkit-scrollbar-thumb {
+  width: 8px;
+  height: 8px;
+  min-height: 32px;
+  background-color: #ccc;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+}
+
+/* width */
+body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  background-color: initial;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  width: 10px;
+  height: 10px;
+  min-height: 32px;
+  background-color: #ccc;
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+}
+
+
+#sidebar h2 {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+/* Hide the blurb on a small screen */
+#blurb {
+  display: none;
+}
+
+.display-5 {
+    font-size: 15px;
+    font-weight: 650;
+    color: #888888;
+}
+
+#sidebar-toggle {
+  display: none;
+  height: 30px;
+  width: auto;
+}
+
+#run {
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    color: #555;
+    text-align: center;
+    font-size: 14px;
+    /*font-weight: bold;*/
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #333;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+  max-width: 2040px;
+  font-size: 2.0rem;
+}
+
+*{
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+#daycounter {
+display: inline;
+color: #333333}
+
+#dayparagraph {
+display: inline;
+color: #999999}
+
+.navbar-brand {
+  display: block;
+  font-size: 18px;
+  /* font-weight: bold; */
+  margin-left: 3.4rem;
+  max-width: 2040px;
+  margin-right: auto;
+}
+
+.navbar-dark .navbar-brand {
+    color: #cccccc;
+}
+
+#redirect:hover {
+    color: transparent;
+}
+
+#mineheader {
+color: #ccc;
+font-size: 16px
+}
+
+#mineheader:hover {
+color: #fff;
+}
+
+#collapse *:first-child {
+  margin-top: 1rem;
+}
+
+#da-collapse *:first-child {
+  margin-top: 1rem;
+}
+
+#s-collapse *:first-child {
+  margin-top: 1rem;
+}
+
+
+#data-visualization{
+  width: 100vh!important;
+  height: 100vh!important;
+}
+
+/* add the three horizontal bars icon for the toggle */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.grqsXf{
+  top: 0rem;
+  height:200px;
+}
+
+/*color for active link on sidebar */
+.nav-pills .nav-link.active {
+    color: #333333;
+    background-color: #e3e3e3;
+}
+
+.nav-pills a:hover {
+    color: orange;
+    border-radius: 0px;
+    margin-left: 10px;
+    transition: 0.4s;
+}
+
+.tab--selected{
+/*  background-color: #323232 !important;*/
+  border-top-color: #333333 !important;
+/*  color: #abc432 !important;
+  padding: 8px 10px 2px 10px !important;*/
+}
+
+.dash-table-container{
+  position: relative;
+  left: 0rem;
+  font-size: 14px;
+}
+
+.nav-link {
+    color: #495057;
+    font-size: 14px;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+#page-content {
+position: relative;
+  padding: 4.5rem 1rem;
+}
+
+.sc-jzJRlG.epVTBA.daq-graduatedbar--light__progressBlock {
+  background-color: rgb(95, 148, 92) !important;
+  }
+
+#Va-bar .aturR{
+background-color: rgb(106, 42, 114) !important;
+}
+
+#Vb-bar .aturR{
+background-color: rgb(38, 130, 186) !important;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+    --accent: orange;
+}
+
+@media (min-width: 48em) {
+  #sidebar {
+    position: fixed;
+    top: 4rem; 
+    /* # top margin for the sidebar */
+    /* margin-top: 4rem;*/
+    left: 0;
+    bottom: 0;
+    width: 24.5rem;
+    text-align: left;
+    /*overflow-y: auto;
+    overflow-x: hidden;*/
+    transition: margin 0.3s ease-in-out, padding 0.3s ease-in-out;
+  }
+
+  .dash-table-container{
+    position: relative;
+    left: 5rem;
+    font-size: 14px;
+  }
+
+  #data-visualization{
+    width: 80vh!important;
+    height: 70vh!important;
+  }
+
+  .ml-2{
+    letter-spacing: 0.6em;
+  }
+
+
+  .daq-graduatedbar--light{
+    position: relative;
+    top: 8rem;
+    height=90vh
+  }
+
+
+  .sc-fjdhpX{
+    top: 0rem;
+    width: 60px !important;
+    height:600px !important;
+  }
+
+
+  #goal_bar .sc-fjdhpX{
+    top: -8rem;
+    width: 1000px !important;
+    height: 40px !important;
+    left: 0%;
+  }
+
+
+
+  #Vb-bar .sc-fjdhpX{
+    top: -8rem;
+    width: 500px !important;
+    height: 30px !important;
+  }
+
+  #Va-bar .sc-fjdhpX{
+    top: -8rem;
+    width: 500px !important;
+    height: 30px !important;
+  }
+
+  #goal_bar .epVTBA {
+    width: 5px;
+    margin: 0px;
+    height: 40px!important;
+  }
+
+  #Va-bar .aturR {
+    width: 0.5%;
+    margin: 0px;
+    height: 30px!important;
+  }
+
+  #Vb-bar .aturR {
+    width: 0.5%;
+    margin: 0px;
+    height: 30px!important;
+  }
+
+  .daq-graduatedbar--light__progressBlock{
+    height: 80px !important;
+  }
+
+  .structure-sensors-back{
+    width: 150vh;
+    height: 150vh;
+  }
+
+  #sidebar-toggle {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    transition: top 0.3s ease-in-out;
+  }
+
+  /* add negative margin to sidebar to achieve the collapse */
+  #sidebar.collapsed {
+    margin-left: -20rem;
+    padding-right: 0.5rem;
+    overflow: hidden;
+  }
+
+  #sidebar.collapsed:hover {
+
+  }
+
+  #sidebar.collapsed ~ #navbar {
+    margin-left: 6.5rem;
+  }
+  /* move the sidebar toggle up to the top left corner */
+  #sidebar.collapsed #sidebar-toggle {
+    top: -1rem;
+  }
+
+  /* also adjust margin of page content */
+  #sidebar.collapsed ~ #page-content {
+    margin-left: 6rem;
+  }
+
+  /* move all contents of navbar other than header (containing toggle) further
+     off-screen */
+  #sidebar.collapsed > *:not(:first-child) {
+    margin-left: -6rem;
+    margin-right: 6rem;
+  }
+
+  /* reveal the blurb on a large screen */
+  #blurb {
+    display: block;
+  }
+
+  /* Hide the toggle on a large screen */
+  #navbar-toggle {
+    display: none;
+  }
+
+  #collapse {
+    display: block;
+  }
+
+  #da-collapse {
+    display: block;
+  }
+
+  #s-collapse {
+    display: block;
+  }
+  /* set margins of the main content so that it doesn't overlap the sidebar */
+  #page-content {
+    margin-left: 26rem;
+    margin-right: 0rem;
+    transition: margin-left 0.3s ease-in-out;
+  }
+}

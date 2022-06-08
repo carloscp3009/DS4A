@@ -15,8 +15,8 @@ All data is allocated in data folder and assest (Images and Stylesheets) are all
 import dash
 import dash_auth
 import dash_bootstrap_components as dbc
-from dash import html
-from dash import dcc
+from dash import html, dcc
+
 # import dash_core_components as dcc
 # import dash_html_components as html
 # from flask_cors import CORS
@@ -28,7 +28,7 @@ from dash import dcc
 # import components.risk_management as risk_management
 # import components.goal_seek as goal_seek
 # import components.layout_modification_callbacks as layout_callbacks
-# from components.navbar import navbar
+from components.navbar import navbar
 # from components.sidebar import sidebar
 # from components.api import api
 import json
@@ -73,17 +73,9 @@ theme = {
 
 content = html.Div(id="page-content")
 # app.layout = html.Div([dcc.Location(id="url"), navbar, sidebar, content])
-app.layout = html.Div([dcc.Location(id="url"), content])
+app.layout = html.Div([dcc.Location(id="url"), navbar, content])
 
-# dashboard.register_callback_dash(app)
-# #sensors.register_callbacks_sensors(app)
-# sc.register_callbacks(app)
-# dynamic_analysis.register_callbacks_DA(app)
-# risk_management.register_callbacks_risk_management(app)
-# goal_seek.register_callbacks_goalseek(app)
-# layout_callbacks.register_callbacks_layout_modifier(app)
 
-# server.register_blueprint(api)
 
 @server.route('/test')
 def test():
