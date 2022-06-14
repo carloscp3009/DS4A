@@ -22,7 +22,8 @@ filters_bar = dbc.Row(
                     {"label": "Disabled option", "value": "3", "disabled": True},
                 ],
                 placeholder='Zona'
-            )
+            ),
+            className="ps-2"
         ),
         dbc.Col(
             dbc.Select(
@@ -33,7 +34,8 @@ filters_bar = dbc.Row(
                     {"label": " option", "value": "3", "disabled": True},
                 ],
                 placeholder='Departamento'
-            )
+            ),
+            className="ps-2"
         ),
         dbc.Col(
             dbc.Select(
@@ -44,7 +46,8 @@ filters_bar = dbc.Row(
                     {"label": " option", "value": "3", "disabled": True},
                 ],
                 placeholder='Municipio'
-            )
+            ),
+            className="ps-2"
         ),
         dbc.Col(
             dbc.Select(
@@ -55,7 +58,8 @@ filters_bar = dbc.Row(
                     {"label": " option", "value": "3", "disabled": True},
                 ],
                 placeholder='Variable de interés'
-            )
+            ),
+            className="ps-2"
         ),
     ],
     className="g-0 ms-auto flex-nowrap mt-3 mt-md-0 pe-4",
