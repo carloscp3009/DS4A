@@ -1,0 +1,7 @@
+select{
+    background-color: transparent !important;
+    color: gray !important;
+    border: solid 1px gray !important;
+    background-image: url('chevron.svg') !important;
+    margin-left: 20px !important;
+}
