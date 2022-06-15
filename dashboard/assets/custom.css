@@ -1,3 +1,17 @@
+#main-container{
+    height: 100vh;
+    max-width: 100%;
+    width: 100vw;
+}
+#central-container{
+    height: calc(100vh - 140px);
+    max-width: 100%;
+    width: 100vw;
+}
+#bottom-bar{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+}
 select{
     background-color: transparent !important;
     color: gray !important;

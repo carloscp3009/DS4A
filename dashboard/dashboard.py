@@ -2,11 +2,11 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 from tkinter.tix import Select
-from dash import Dash, dcc, html
+from dash import Dash, dcc, html, Input, Output, State
+from numpy import deprecate_with_doc
 import plotly.express as px
 import pandas as pd
 import dash_bootstrap_components as dbc
-from dash import Input, Output, State
 
 # app = Dash(__name__)
 app = Dash(external_stylesheets=["assets/bootstrap.min.css"])
@@ -90,43 +90,60 @@ navbar = dbc.Navbar(
 )
 
 
-left_container = dbc.Col(
+left_col = dbc.Col(
         [
             dbc.Container(
                 dbc.Card(
                     dbc.CardBody("aquí es donde va el mapa"),
-                    className="mt-2",
-                    style={"height": "600px"},
+                    className="mt-2 h-100",
                 ),
+                className="h-100",
             ),
         ],
-        className="col-12 col-md-9",
+        id="left-col",
+        className="col-12 col-md-9 h-100",
     )
 
-right_container = dbc.Col(
+right_col = dbc.Col(
         [
             dbc.Container(
                 dbc.Card(
                     dbc.CardBody("aquí es donde vanlos gráficos"),
-                    className="mt-2",
-                    style={"height": "600px"},
+                    className="mt-2 h-100",
                 ),
+                className="h-100",
             ),
         ],
-        className="col-md-3 .d-sm-none .d-md-block ps-2",
+        id="right-col",
+        className="col-md-3 .d-sm-none .d-md-block ps-2 h-100",
     )
+
+
+bottom_bar = dbc.Navbar(
+    dbc.Col(
+        "Developed by Team 50 - DS4A",
+        className="text-end text-muted px-2",
+    ),
+    id="bottom-bar",
+    color="dark", dark=True, fixed="bottom",
+    # className="ms-2 mx-2",
+)
+
 
 app.layout = dbc.Container(
     children=[
         navbar,
         dbc.Container(
             [
-                left_container,
-                right_container,
+                left_col,
+                right_col,
             ],
-            className="g-0 ms-auto flex-nowrap row",
+            id="central-container",
+            className="g-0 ms-auto flex-nowrap row pb-2",
         ),
-    ]
+        bottom_bar,
+    ],
+    id="main-container",
 )
 
 
