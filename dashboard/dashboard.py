@@ -8,6 +8,9 @@ import plotly.express as px
 import pandas as pd
 import dash_bootstrap_components as dbc
 
+from map import map 
+from static_data import features
+
 # app = Dash(__name__)
 app = Dash(external_stylesheets=["assets/bootstrap.min.css"])
 
@@ -52,11 +55,12 @@ filters_bar = dbc.Row(
         dbc.Col(
             dbc.Select(
                 id="select-feature",
-                options=[
-                    {"label": "Option 1", "value": "1"},
-                    {"label": "Option 2", "value": "2"},
-                    {"label": " option", "value": "3", "disabled": True},
-                ],
+                # options=[
+                #     {"label": "Option 1", "value": "1"},
+                #     {"label": "Option 2", "value": "2"},
+                #     {"label": " option", "value": "3", "disabled": True},
+                # ],
+                options=features,
                 placeholder='Variable de interés'
             ),
             className="ps-2"
@@ -94,7 +98,7 @@ left_col = dbc.Col(
         [
             dbc.Container(
                 dbc.Card(
-                    dbc.CardBody("aquí es donde va el mapa"),
+                    dbc.CardBody(dcc.Graph(id='map', figure=map)),
                     className="mt-2 h-100",
                 ),
                 className="h-100",
