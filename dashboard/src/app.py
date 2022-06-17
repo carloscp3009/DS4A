@@ -8,6 +8,7 @@ import dash_bootstrap_components as dbc
 from components.navbar import navbar
 from components.central_container import central_container
 from components.footer import footer
+import utils.map as map
 
 app = Dash(__name__)
 
@@ -37,8 +38,9 @@ def toggle_navbar_collapse(n, is_open):
         return not is_open
     return is_open
 
+map.register_callback(app)
 # ------------------------------------------------------------------------------
 # Run the Dash app
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
