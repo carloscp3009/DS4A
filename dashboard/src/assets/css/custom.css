@@ -3,6 +3,15 @@
     max-width: 100%;
     width: 100vw;
 }
+.navbar .container{
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.navbar input#select-features{
+    min-width:  ;
+}
 #central-container{
     height: calc(100vh - 140px);
     max-width: 100%;
@@ -17,4 +26,8 @@ select{
     color: gray !important;
     border: solid 1px gray !important;
     background-image: url('images/chevron.svg') !important;
+}
+select option{
+    background-color: #303030 !important;
+    color: gray !important;
 }
