@@ -1,4 +1,4 @@
-import json
+# import json
 # variable = ['pH agua:suelo 2,5:1,0 ',
 # 'Materia orgánica (MO) %',
 # 'Fósforo (P) Bray II mg/kg',
@@ -21,8 +21,11 @@ import json
 # 'Manganeso (Mn) disponible doble acido mg/kg',
 # 'Zinc (Zn) disponible doble acido mg/kg']
 
-variables = ["ph","materia_organica","fosforo","azufre","acidez","aluminio","calcio","magnesio","potasio","sodio","cice","ce","hierro_olsen","cobre","manganeso","zinc_olsen","boro","hierro_doble_acido", "cobre_doble_acido","manganeso_doble_acido"]
+variables = [
+    "ph", "materia_organica", "fosforo", "azufre", "acidez", "aluminio",
+    "calcio", "magnesio", "potasio", "sodio", "cice", "ce", "hierro_olsen",
+    "cobre", "manganeso", "zinc_olsen", "boro", "hierro_doble_acido",
+    "cobre_doble_acido", "manganeso_doble_acido"]
 features = []
 for i in range(len(variables)):
-    features.append({"label": variables[i], "value": i+1})
-
+    features.append({"label": variables[i], "value": i + 1})

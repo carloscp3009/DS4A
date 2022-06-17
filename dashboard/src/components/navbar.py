@@ -1,5 +1,6 @@
 from dash import html
 import dash_bootstrap_components as dbc
+from utils.static_data import features
 
 filters_bar = dbc.Row(
     [
@@ -42,7 +43,7 @@ filters_bar = dbc.Row(
         dbc.Col(
             dbc.Select(
                 id="select-feature",
-                # options=[
+                options=features,
                 #     {"label": "Option 1", "value": "1"},
                 #     {"label": "Option 2", "value": "2"},
                 #     {"label": " option", "value": "3", "disabled": True},

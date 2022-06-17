@@ -3,20 +3,11 @@
 
 from dash import Dash, Input, Output, State
 import dash_bootstrap_components as dbc
-import pandas as pd
-# from tkinter.tix import Select
-# from dash import Dash, dcc, html, Input, Output, State
-# from numpy import deprecate_with_doc
-# import plotly.express as px
+# import pandas as pd
 
 from components.navbar import navbar
 from components.central_container import central_container
 from components.footer import footer
-from utils.map import map
-from utils.static_data import features
-
-
-# df = pd.read_csv('/data/suelos_preprocesado.csv')
 
 app = Dash(__name__)
 
