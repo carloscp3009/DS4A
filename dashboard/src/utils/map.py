@@ -13,10 +13,12 @@ pio.templates["custom_dark"] = pio.templates["plotly_dark"]
 pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#303030'
 pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#303030'
 
-AGROSAVIA_df = pd.read_csv("data/AGROSAVIA.csv", dtype=str)
 
 ruta = Path(__file__).parent.absolute()
 ruta = ruta.parent
+
+ruta_archivo = os.path.join(ruta, "data", "AGROSAVIA.csv")
+AGROSAVIA_df = pd.read_csv(ruta_archivo, dtype=str)
 
 ruta_archivo = os.path.join(ruta, "data", "Municipios_Colombia.geojson")
 with open(ruta_archivo) as file:
@@ -55,12 +57,13 @@ fig = px.choropleth_mapbox(
 fig.update_layout(autosize=True, margin=dict(l=0, r=0, t=0, b=0))
 fig.update_traces(marker_line_width=0)  # clear contours
 
+
 def register_callback(app):
     @app.callback(
         [Output(component_id='map', component_property='figure')],
         [Input(component_id='select-feature', component_property='value')]
     )
-    def update_graph(feature):
+    def update_graph(feature='Potasio (K) intercambiable cmol(+)/kg'):
         AGROSAVIA_df[feature] = AGROSAVIA_df[feature].astype(float)
         col = feature
         data_req = AGROSAVIA_df.groupby("MUN_ID")[col].mean().to_frame()
