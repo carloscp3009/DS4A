@@ -7,5 +7,4 @@ footer = dbc.Navbar(
     ),
     id="bottom-bar",
     color="dark", dark=True, fixed="bottom",
-    # className="ms-2 mx-2",
 )
