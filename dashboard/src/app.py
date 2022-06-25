@@ -13,7 +13,10 @@ from components.footer import footer
 import utils.map as map
 
 
-app = Dash(__name__)
+app = Dash(
+    __name__,
+    external_stylesheets=[
+        dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
 
 # ------------------------------------------------------------------------------
 # App layout

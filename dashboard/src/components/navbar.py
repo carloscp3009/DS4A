@@ -3,10 +3,7 @@ import dash_bootstrap_components as dbc
 from zmq import OUT_BATCH_SIZE
 from utils.load_data import lstVariables, lstDepartamentos, lstZonas
 
-# lst = []
-# for k, v in lstDepartamentos.items():
-#     lst.append({"label": v.get("descripcion"), "value": k})
-
+# ------------------------------------------------------------------------------
 
 filters_bar = dbc.Row(
     [
@@ -14,7 +11,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-zone",
                 options=[
-                    {"label": v.get("descripcion"), "value": k}
+                    {"label": v.get("zona"), "value": k}
                     for k, v in lstZonas.items()
                 ],
                 placeholder='Zona'
@@ -25,7 +22,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-deparment",
                 options=[
-                    {"label": v.get("descripcion"), "value": k}
+                    {"label": v.get("departamento"), "value": k}
                     for k, v in lstDepartamentos.items()
                 ],
                 placeholder='Departamento'
@@ -54,13 +51,14 @@ filters_bar = dbc.Row(
         ),
         dbc.Col([
             dbc.Button(
-                ["Filtrar"],
+                html.I(className="fas fa-check"),
                 id="btnFiltrar",
                 className="ms-1"
             ),
             dbc.Button(
-                ["Reset"],
-                id="reset",
+                html.I(className="fas fa-arrow-rotate-left"),
+                id="btnReset",
+                color="danger",
                 className="ms-1",
             ),
         ])
@@ -105,12 +103,32 @@ navbar = dbc.Navbar(
     prevent_initial_call=True
 )
 def update_deparments(zona):
+    lst = []
     try:
-        departamentos = lstZonas.get(zona).get("departamentos")
-        lst = []
-        for departamento in departamentos:
-            obj = lstDepartamentos[departamento]
-            lst.append({"label": obj["descripcion"], "value": departamento})
+        if zona:
+            departamentos = lstZonas.get(zona).get("departamentos")
+            for departamento in departamentos:
+                obj = lstDepartamentos[departamento]
+                lst.append(
+                    {
+                        "label": obj["departamento"],
+                        "value": departamento})
+        else:
+            lst = [
+                {"label": v.get("departamento"), "value": k}
+                    for k, v in lstDepartamentos.items()
+            ]
     except Exception as e:
         print("update_deparments:", e)
     return ["", lst]
+
+# agregar callback para el botrón btnReset que borre el contenido de value en select-deparment, select-municipality y select-feature y select-zone
+@callback(
+    [
+        Output('select-zone', 'value')
+    ],
+    [Input('btnReset', 'n_clicks')],
+    prevent_initial_call=True
+)
+def reset_filters(n_clicks):
+    return [""]

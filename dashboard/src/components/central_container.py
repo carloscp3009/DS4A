@@ -12,12 +12,12 @@ from utils.load_data import lstVariables
 left_col = dbc.Col(
         [
             dbc.Container(
-                dcc.Graph(
-                    id='map',
-                    figure=map,
-                    className="mt-2 h-100 mb-2",
-                ),
-                className="mt-2 h-100 mb-2",
+                # dcc.Graph(
+                #     id='map',
+                #     figure=map,
+                #     className="mt-2 h-100 mb-2",
+                # ),
+                # className="mt-2 h-100 mb-2",
             ),
         ],
         id="left-col",
