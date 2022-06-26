@@ -1,5 +1,6 @@
 from turtle import bgcolor
 from dash import html, dcc
+import numpy as np
 import pandas as pd
 import dash_bootstrap_components as dbc
 
@@ -9,9 +10,9 @@ from utils.load_data import df
 
 
 class univariate_plot:
-    def __init__(self, variable, tipo_agregado='departamento', agregado='cauca'):
+    def __init__(self, variable, titulo, tipo_agregado='departamento', agregado='cauca'):
         """Constructs all the attributes for kpiplot class"""
-        self.label = variable.replace("_", " ").capitalize()
+        self.label = titulo
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
         self.variable = variable
@@ -47,7 +48,8 @@ class univariate_plot:
                     'type': 'scatter',
                     'mode': 'markers',
                     'name': 'Normal',
-                    'hovertemplate':'%{x}',
+                    'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
+                    'marker': {"size": "3", "color": "#2196f3"},
                 },
                 {
                     'x': df_filtrado[filtro_2][self.variable],
@@ -55,27 +57,46 @@ class univariate_plot:
                     'type': 'scatter',
                     'mode': 'markers',
                     'name': 'Outlier',
-                    'hovertemplate':'%{x}',
+                    'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
+                    'marker': {"size": "3", "color": "#ffeb3b"},
                 },
             ]
 
             layout = dict(
                 autosize=True,
-                margin=dict(l=35, r=0, t=35, b=30),
+                font={'color': '#ffffff'},
+                margin=dict(l=35, r=0, t=20, b=30),
                 height=120,
-                plot_bgcolor='rgba(0, 0, 0, 0)',
+                plot_bgcolor='rgba(48, 48, 48, 1)',
+                paper_bgcolor='rgba(48, 48, 48, 1)',
                 bgcolor='rgba(0, 0, 0, 0.5)',
                 legend=dict(
                     orientation="h",
+                    xanchor="right",
+                    yanchor="top",
                     y=0,
-                    x=0.5,
-                    bgcolor="rgba(255, 255, 255, 0.5)",
+                    x=1,
+                    bgcolor="rgba(0, 0, 0, 0)",
+                    font=dict(
+                        size=8,
+                    ),
                 ),
                 xaxis=dict(
                     title='',
                     type='log',
+                    gridcolor='gray',
+                    zerolinecolor='white',
                 ),
-                title=self.variable.capitalize(),
+                yaxis=dict(
+                    gridcolor='gray',
+                    zerolinecolor='white',
+                ),
+                title={
+                    'text': self.label,
+                    'x': 0.5,
+                    'y': 0.95,
+                    'font': {'size': 12},
+                },
             )
 
             fig = dict(data=datadict, layout=layout)

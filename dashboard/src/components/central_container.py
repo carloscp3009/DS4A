@@ -26,26 +26,30 @@ left_col = dbc.Col(
 
 # ------------------------------------------------------------------------------
 
-acidez_plot = univariate_plot("acidez")
-aluminio_plot = univariate_plot("aluminio")
-azufre_plot = univariate_plot("azufre")
-boro_plot = univariate_plot("boro")
-calcio_plot = univariate_plot("calcio")
-ce_plot = univariate_plot("ce")
-cice_plot = univariate_plot("cice")
-cobre_plot = univariate_plot("cobre")
-cobre_doble_acido_plot = univariate_plot("cobre_doble_acido")
-fosforo_plot = univariate_plot("fosforo")
-hierro_doble_acido_plot = univariate_plot("hierro_doble_acido")
-hierro_olsen_plot = univariate_plot("hierro_olsen")
-magnesio_plot = univariate_plot("magnesio")
-manganeso_plot = univariate_plot("manganeso")
-manganeso_doble_acido_plot = univariate_plot("manganeso_doble_acido")
-materia_organica_plot = univariate_plot("materia_organica")
-ph_plot = univariate_plot("ph")
-potasio_plot = univariate_plot("potasio")
-sodio_plot = univariate_plot("sodio")
-zinc_olsen_plot = univariate_plot("zinc_olsen")
+acidez_plot = univariate_plot("acidez", "Acidez")
+aluminio_plot = univariate_plot("aluminio", "Aluminio")
+azufre_plot = univariate_plot("azufre", "Azufre")
+boro_plot = univariate_plot("boro", "Boro")
+calcio_plot = univariate_plot("calcio", "Calcio")
+ce_plot = univariate_plot("ce", "Conductividad eléctrica")
+cice_plot = univariate_plot("cice", "Coef. intercambio catiónico")
+cobre_plot = univariate_plot("cobre", "Cobre")
+cobre_doble_acido_plot = univariate_plot(
+    "cobre_doble_acido", "Cobre doble ácido")
+fosforo_plot = univariate_plot("fosforo", "Fósforo")
+hierro_doble_acido_plot = univariate_plot(
+    "hierro_doble_acido", "Hierro doble ácido")
+hierro_olsen_plot = univariate_plot("hierro_olsen", "Hierro Olsen")
+magnesio_plot = univariate_plot("magnesio", "Magnesio")
+manganeso_plot = univariate_plot("manganeso", "Manganeso")
+manganeso_doble_acido_plot = univariate_plot(
+    "manganeso_doble_acido", "Manganeso doble ácido")
+materia_organica_plot = univariate_plot(
+    "materia_organica", "Materia orgánica")
+ph_plot = univariate_plot("ph", "pH")
+potasio_plot = univariate_plot("potasio", "Potasio")
+sodio_plot = univariate_plot("sodio", "Sodio")
+zinc_olsen_plot = univariate_plot("zinc_olsen", "Zinc Olsen")
 
 lstPlots = [
     "acidez", "aluminio", "azufre", "boro", "calcio", "ce", "cice", "cobre",

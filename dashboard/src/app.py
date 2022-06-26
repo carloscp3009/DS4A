@@ -44,7 +44,7 @@ def toggle_navbar_collapse(n, is_open):
         return not is_open
     return is_open
 
-map.register_callback(app)
+# map.register_callback(app)
 
 # ------------------------------------------------------------------------------
 # Run the Dash app

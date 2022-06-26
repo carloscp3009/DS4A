@@ -58,17 +58,17 @@ fig.update_layout(autosize=True, margin=dict(l=0, r=0, t=0, b=0))
 fig.update_traces(marker_line_width=0)  # clear contours
 
 
-def register_callback(app):
-    @app.callback(
-        [Output(component_id='map', component_property='figure')],
-        [Input(component_id='select-feature', component_property='value')]
-    )
-    def update_graph(feature='Potasio (K) intercambiable cmol(+)/kg'):
-        AGROSAVIA_df[feature] = AGROSAVIA_df[feature].astype(float)
-        col = feature
-        data_req = AGROSAVIA_df.groupby("MUN_ID")[col].mean().to_frame()
-        data_req["Nombre"] = DANE_df.Municipio
-        data_req.reset_index(inplace=True)
+# def register_callback(app):
+#     @app.callback(
+#         [Output(component_id='map', component_property='figure')],
+#         [Input(component_id='select-feature', component_property='value')]
+#     )
+#     def update_graph(feature='Potasio (K) intercambiable cmol(+)/kg'):
+#         AGROSAVIA_df[feature] = AGROSAVIA_df[feature].astype(float)
+#         col = feature
+#         data_req = AGROSAVIA_df.groupby("MUN_ID")[col].mean().to_frame()
+#         data_req["Nombre"] = DANE_df.Municipio
+#         data_req.reset_index(inplace=True)
 
-        fig.update_layout(data_frame=data_req)
+#         fig.update_layout(data_frame=data_req)
 map = fig

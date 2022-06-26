@@ -61,7 +61,8 @@ filters_bar = dbc.Row(
                 color="danger",
                 className="ms-1",
             ),
-        ])
+        ],
+        className="col-auto")
     ],
     className="g-0 ms-auto flex-nowrap mt-3 mt-md-0 pe-4",
     align="center",
