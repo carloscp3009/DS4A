@@ -10,7 +10,7 @@ from utils.load_data import df
 
 
 class univariate_plot:
-    def __init__(self, variable, titulo, tipo_agregado='departamento', agregado='cauca'):
+    def __init__(self, variable, titulo, tipo_agregado=None, agregado=None):
         """Constructs all the attributes for kpiplot class"""
         self.label = titulo
         self.tipo_agregado = tipo_agregado
@@ -24,8 +24,11 @@ class univariate_plot:
     def figura(self):
         try:
             self.datos['outlier'] = False
-            filtro = self.datos[self.tipo_agregado] == self.agregado
-            df_filtrado = self.datos.loc[filtro]
+            if self.agregado and self.tipo_agregado:
+                filtro = self.datos[self.tipo_agregado] == self.agregado
+                df_filtrado = self.datos.loc[filtro]
+            else:
+                df_filtrado = self.datos
 
             Q3 = df_filtrado[self.variable].quantile(0.75)
             Q1 = df_filtrado[self.variable].quantile(0.25)

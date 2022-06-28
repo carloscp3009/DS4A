@@ -5,7 +5,7 @@ import numpy as np
 from dash import dcc, callback, Input, Output, State
 from utils.map import map
 from components.univariate_plot import univariate_plot
-from utils.load_data import lstVariables
+from utils.load_data import lstPlots
 
 # ------------------------------------------------------------------------------
 
@@ -51,18 +51,11 @@ potasio_plot = univariate_plot("potasio", "Potasio")
 sodio_plot = univariate_plot("sodio", "Sodio")
 zinc_olsen_plot = univariate_plot("zinc_olsen", "Zinc Olsen")
 
-lstPlots = [
-    "acidez", "aluminio", "azufre", "boro", "calcio", "ce", "cice", "cobre",
-    "cobre_doble_acido", "fosforo", "hierro_doble_acido", "hierro_olsen",
-    "magnesio", "manganeso", "manganeso_doble_acido", "materia_organica", "ph",
-    "potasio", "sodio", "zinc_olsen"]
-
 right_col = dbc.Col(
         [
             dbc.Row([
                 eval(f"{variable}_plot").display()],
-                id=f"id_{variable}_plot")
-                    for variable in lstPlots
+                id=f"id_{variable}_plot") for variable in lstPlots
         ],
         id="right-col",
         className="col-md-3 offset-md-9 ps-2 h-100 mt-2",
@@ -81,23 +74,23 @@ central_container = dbc.Container(
 
 # ------------------------------------------------------------------------------
 
-lstOutputs = [Output(f"id_{plot}_plot", "children") for plot in lstPlots]
+# lstOutputs = [Output(f"id_{plot}_plot", "children") for plot in lstPlots]
 
-@callback(
-    lstOutputs,
-    [State('select-deparment', 'value')],
-    [Input('btnFiltrar', 'n_clicks')],
-    prevent_initial_call=True
-)
-def update_plots(departamento, n_clicks):
-    try:
-        lst = []
-        for item in lstVariables:
-            variable = item["value"]
-            # filtro_1 = df['departamento'] == departamento
-            eval(f"{variable}_plot").agregado = departamento
-            nuevo_grafico = eval(f"{variable}_plot").display()
-            lst.append([nuevo_grafico])
-    except Exception as e:
-        print("update_plot:", e)
-    return tuple(lst)
+
+# @callback(
+#     lstOutputs,
+#     [State('select-deparment', 'value')],
+#     [Input('btnFiltrar', 'n_clicks')],
+#     prevent_initial_call=True
+# )
+# def update_plots(departamento, n_clicks):
+#     try:
+#         lst = []
+#         for item in lstVariables:
+#             variable = item["value"]
+#             eval(f"{variable}_plot").agregado = departamento
+#             nuevo_grafico = eval(f"{variable}_plot").display()
+#             lst.append([nuevo_grafico])
+#     except Exception as e:
+#         print("update_plot:", e)
+#     return tuple(lst)
