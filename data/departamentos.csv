@@ -1,0 +1,34 @@
+codigo,departamento,clean
+05,Antioquia,antioquia
+08,Atlántico,atlantico
+11,Bogotá D.C.,bogota_d.c.
+13,Bolívar,bolivar
+15,Boyacá,boyaca
+17,Caldas,caldas
+18,Caquetá,caqueta
+19,Cauca,cauca
+20,Cesar,cesar
+23,Córdoba,cordoba
+25,Cundinamarca,cundinamarca
+27,Chocó,choco
+41,Huila,huila
+44,La Guajira,la_guajira
+47,Magdalena,magdalena
+50,Meta,meta
+52,Nariño,narino
+54,Norte de Santander,norte_de_santander
+63,Quindío,quindio
+66,Risaralda,risaralda
+68,Santander,santander
+70,Sucre,sucre
+73,Tolima,tolima
+76,Valle del Cauca,valle_del_cauca
+81,Arauca,arauca
+85,Casanare,casanare
+86,Putumayo,putumayo
+88,Archipiélago de San Andrés Providencia y Santa Catalina,archipielago_de_san_andres_providencia_y_santa_catalina
+91,Amazonas,amazonas
+94,Guainía,guainia
+95,Guaviare,guaviare
+97,Vaupés,vaupes
+99,Vichada,vichada
