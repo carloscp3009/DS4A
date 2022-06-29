@@ -4,50 +4,55 @@ import numpy as np
 import pandas as pd
 import dash_bootstrap_components as dbc
 
-from utils.load_data import df
+from utils.load_data import Connection
 
 # ------------------------------------------------------------------------------
 
 
 class univariate_plot:
-    def __init__(self, variable, titulo, tipo_agregado=None, agregado=None):
+    def __init__(
+                self, variable, titulo, tipo_agregado='departamento',
+                agregado=None):
         """Constructs all the attributes for kpiplot class"""
         self.label = titulo
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
         self.variable = variable
 
-        self.datos = df[['departamento', 'municipio', variable]].copy()
-        self.datos.dropna(subset=[variable], inplace=True)
+    # --------------------------------------------------------------------------
 
     @staticmethod
     def figura(self):
         try:
-            self.datos['outlier'] = False
-            if self.agregado and self.tipo_agregado:
-                filtro = self.datos[self.tipo_agregado] == self.agregado
-                df_filtrado = self.datos.loc[filtro]
-            else:
-                df_filtrado = self.datos
+            query = '''
+                SELECT id, %s as variable
+                FROM analisis
+                WHERE %s = '%s'
+            ''' % (
+                self.variable, self.tipo_agregado, self.agregado)
+            conn, cur = Connection.get_connection()
+            self.datos = pd.read_sql_query(query, conn)
 
-            Q3 = df_filtrado[self.variable].quantile(0.75)
-            Q1 = df_filtrado[self.variable].quantile(0.25)
+            self.datos['outlier'] = False
+
+            Q3 = self.datos['variable'].quantile(0.75)
+            Q1 = self.datos['variable'].quantile(0.25)
             IQR = Q3 - Q1
 
             limite_superior = Q3 + (1.5 * IQR)
             limite_inferior = Q1 - (1.5 * IQR)
 
-            filtro_1 = df_filtrado[self.variable] > limite_superior
-            filtro_2 = df_filtrado[self.variable] < limite_inferior
-            df_filtrado.loc[filtro_1, 'outlier'] = True
-            df_filtrado.loc[filtro_2, 'outlier'] = True
+            filtro_1 = self.datos['variable'] > limite_superior
+            filtro_2 = self.datos['variable'] < limite_inferior
+            self.datos.loc[filtro_1, 'outlier'] = True
+            self.datos.loc[filtro_2, 'outlier'] = True
 
-            filtro_1 = df_filtrado['outlier'] == False
-            filtro_2 = df_filtrado['outlier'] == True
+            filtro_1 = self.datos['outlier'] == False
+            filtro_2 = self.datos['outlier'] == True
             datadict = [
                 {
-                    'x': df_filtrado[filtro_1][self.variable],
-                    'y': df_filtrado[filtro_1].index,
+                    'x': self.datos[filtro_1]['variable'],
+                    'y': self.datos[filtro_1].index,
                     'type': 'scatter',
                     'mode': 'markers',
                     'name': 'Normal',
@@ -55,8 +60,8 @@ class univariate_plot:
                     'marker': {"size": "3", "color": "#2196f3"},
                 },
                 {
-                    'x': df_filtrado[filtro_2][self.variable],
-                    'y': df_filtrado[filtro_2].index,
+                    'x': self.datos[filtro_2]['variable'],
+                    'y': self.datos[filtro_2].index,
                     'type': 'scatter',
                     'mode': 'markers',
                     'name': 'Outlier',

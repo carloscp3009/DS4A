@@ -5,6 +5,7 @@ from utils.load_data import (
     lstDepartamentos,
     lstZonas,
     lstPlots,
+
     Connection)
 from components.central_container import (
     acidez_plot, aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot)
@@ -16,10 +17,7 @@ filters_bar = dbc.Row(
         dbc.Col(
             dbc.Select(
                 id="select-zone",
-                options=[
-                    {"label": v.get("zona"), "value": k}
-                    for k, v in lstZonas.items()
-                ],
+                options=lstZonas,
                 placeholder='Zona'
             ),
             className="ps-2"
@@ -27,10 +25,7 @@ filters_bar = dbc.Row(
         dbc.Col(
             dbc.Select(
                 id="select-deparment",
-                options=[
-                    {"label": v.get("departamento"), "value": k}
-                    for k, v in lstDepartamentos.items()
-                ],
+                options=lstDepartamentos,
                 placeholder='Departamento'
             ),
             className="ps-2"
@@ -111,21 +106,24 @@ def update_deparments(zona):
     lst = []
     try:
         if zona:
-            departamentos = lstZonas.get(zona).get("departamentos")
-            for departamento in departamentos:
-                obj = lstDepartamentos[departamento]
-                lst.append(
-                    {
-                        "label": obj["departamento"],
-                        "value": departamento})
+            query = '''
+                SELECT
+	                departamentos.codigo, departamentos.departamento
+                FROM
+	                departamentos INNER JOIN
+	                zonas_departamentos ON departamentos.codigo = zonas_departamentos.cod_departamento
+                WHERE zonas_departamentos.cod_zona='%s'
+                ORDER BY departamentos.departamento''' % zona
         else:
-            lst = [
-                {"label": v.get("departamento"), "value": k}
-                for k, v in lstDepartamentos.items()
-            ]
+            query = '''
+                SELECT codigo, departamento
+                FROM departamentos
+                ORDER BY departamento'''
+        data = Connection.get_data(query)
+        lstDepartamentos = [{"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
         print("update_deparments:", e)
-    return ["", lst]
+    return ["", lstDepartamentos]
 
 # ------------------------------------------------------------------------------
 
@@ -133,7 +131,7 @@ def update_deparments(zona):
 @callback(
     [
         Output('select-zone', 'value'),
-        Output('select-feature', 'value')
+        Output('select-feature', 'value'),
     ],
     [Input('btnReset', 'n_clicks')],
     prevent_initial_call=True)
@@ -154,17 +152,21 @@ def update_municipalities(departamento):
     lst = []
     try:
         if departamento:
-            codigo = lstDepartamentos[departamento]["codigo"]
-            query = (
-                'SELECT codigo, municipio '
-                'FROM municipios '
-                'WHERE departamento = %s' % codigo)
-            data = Connection.get_data(query)
-            for row in data:
-                lst.append({"label": row[1], "value": row[0]})
+            query = '''
+                SELECT codigo, municipio
+                FROM municipios
+                WHERE cod_departamento = '%s'
+                ORDER BY municipio''' % departamento
+        else:
+            query = '''
+                SELECT codigo, municipio
+                FROM municipios
+                ORDER BY municipio'''
+        data = Connection.get_data(query)
+        lstMunicipios = [{"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
         print("update_municipalities:", e)
-    return ["", lst]
+    return ["", lstMunicipios]
 
 # ------------------------------------------------------------------------------
 
@@ -188,15 +190,17 @@ def update_plots(zona, departamento, municipio, feature, n_clicks):
         agregado = tipo_agregado = ""
         if municipio:
             agregado = municipio
-            tipo_agregado = "municipio"
+            tipo_agregado = "cod_municipio"
         elif departamento:
             agregado = departamento
-            tipo_agregado = "departamento"
+            tipo_agregado = "cod_departamento"
         elif zona:
             agregado = zona
-            tipo_agregado = "zona"
+            tipo_agregado = "cod_zona"
         else:
-            return [no_update for i in range(len(lstOutputs))]
+            agregado = None
+            tipo_agregado = "departamento"
+            # return [no_update for i in range(len(lstOutputs))]
         lst = []
         for item in lstVariables:
             variable = item["value"]
@@ -207,3 +211,18 @@ def update_plots(zona, departamento, municipio, feature, n_clicks):
     except Exception as e:
         print("update_plots:", e)
     return tuple(lst)
+
+
+# ------------------------------------------------------------------------------
+
+
+@callback(
+    [Output('btnFiltrar', 'n_clicks')],
+    [Input('select-feature', 'value')],
+    prevent_initial_call=True)
+def reset_plots(feature):
+    if feature == "":
+        return ["1"]
+    return [0]
+
+# ------------------------------------------------------------------------------

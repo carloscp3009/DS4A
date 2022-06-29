@@ -22,44 +22,28 @@ class Connection():
 # ------------------------------------------------------------------------------
 
 
-# crear un diccionario a partir del resultado de una consulta a la base de datos
 lstVariables = []
 query = 'SELECT codigo, variable FROM variables'
 data = Connection.get_data(query)
-for row in data:
-    lstVariables.append({"label": row[1], "value": row[0]})
+lstVariables = [{"label": row[1], "value": row[0]} for row in data]
 
 # ------------------------------------------------------------------------------
 
-# lstMunicipios = {}
-# query = 'SELECT codigo, municipio, clean, departamento FROM municipios'
-# data = Connection.get_data(query)
-# for row in data:
-#     lstMunicipios[row[1]] = {
-#         "value": row[0],
-#         "clean": row[2],
-#         "departamento": row[3]
-#     }
-
-# ------------------------------------------------------------------------------
-
-lstDepartamentos = {}
-query = 'SELECT clean, departamento, codigo FROM departamentos'
+lstDepartamentos = []
+query = 'SELECT codigo, departamento FROM departamentos ORDER BY departamento'
 data = Connection.get_data(query)
-for row in data:
-    lstDepartamentos[row[0]] = {"departamento": row[1], "codigo": row[2]}
+lstDepartamentos = [{"label": row[1], "value": row[0]} for row in data]
 
 # ------------------------------------------------------------------------------
 
 lstZonas = {}
-query = 'SELECT codigo, zona, departamentos FROM zonas'
+query = 'SELECT codigo, zona FROM zonas'
 data = Connection.get_data(query)
-for row in data:
-    lstZonas[row[0]] = {"zona": row[1], "departamentos": eval(row[2])}
+lstZonas = [{"label": row[1], "value": row[0]} for row in data]
 
 # ------------------------------------------------------------------------------
 
-df = pd.read_csv('data/suelos_preprocesado.csv')
+df = pd.read_csv('data/suelos_preprocesado.csv', nrows=100)
 
 # ------------------------------------------------------------------------------
 
