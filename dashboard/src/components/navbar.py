@@ -156,7 +156,7 @@ def update_municipalities(departamento):
     try:
         if departamento:
             query = '''
-                SELECT codigo, municipio
+                SELECT cod_municipio, municipio
                 FROM municipios
                 WHERE cod_departamento = '%s'
                 ORDER BY municipio''' % departamento
