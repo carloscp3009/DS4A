@@ -153,7 +153,7 @@ def reset_filters(n_clicks):
     [Input('select-deparment', 'value')],
     prevent_initial_call=True)
 def update_municipalities(departamento):
-    lst = []
+    lstMunicipios = []
     try:
         if departamento:
             query = '''
@@ -161,13 +161,8 @@ def update_municipalities(departamento):
                 FROM municipios
                 WHERE cod_departamento = '%s'
                 ORDER BY municipio''' % departamento
-        else:
-            query = '''
-                SELECT cod_municipio, municipio
-                FROM municipios
-                ORDER BY municipio'''
-        data = Connection.get_data(query)
-        lstMunicipios = [{"label": row[1], "value": row[0]} for row in data]
+            data = Connection.get_data(query)
+            lstMunicipios = [{"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
         print("update_municipalities:", e)
     return ["", lstMunicipios]
