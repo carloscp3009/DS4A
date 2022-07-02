@@ -1,11 +1,12 @@
 import dash_bootstrap_components as dbc
-import pandas as pd
-import numpy as np
+# import pandas as pd
+# import numpy as np
 
-from dash import dcc, callback, Input, Output, State
-from utils.map import map
+# from dash import dcc, callback, Input, Output, State
+# from utils.map import map
 from components.univariate_plot import univariate_plot
-from utils.load_data import lstPlots
+from components.multivariate_plot import multivariate_plot
+# from utils.load_data import lstPlots
 
 # ------------------------------------------------------------------------------
 
@@ -26,40 +27,28 @@ left_col = dbc.Col(
 
 # ------------------------------------------------------------------------------
 
-acidez_plot = univariate_plot("acidez", "Acidez")
-aluminio_plot = univariate_plot("aluminio", "Aluminio")
-azufre_plot = univariate_plot("azufre", "Azufre")
-boro_plot = univariate_plot("boro", "Boro")
-calcio_plot = univariate_plot("calcio", "Calcio")
-ce_plot = univariate_plot("ce", "Conductividad eléctrica")
-cice_plot = univariate_plot("cice", "Coef. intercambio catiónico")
-cobre_plot = univariate_plot("cobre", "Cobre")
-cobre_doble_acido_plot = univariate_plot(
-    "cobre_doble_acido", "Cobre doble ácido")
-fosforo_plot = univariate_plot("fosforo", "Fósforo")
-hierro_doble_acido_plot = univariate_plot(
-    "hierro_doble_acido", "Hierro doble ácido")
-hierro_olsen_plot = univariate_plot("hierro_olsen", "Hierro Olsen")
-magnesio_plot = univariate_plot("magnesio", "Magnesio")
-manganeso_plot = univariate_plot("manganeso", "Manganeso")
-manganeso_doble_acido_plot = univariate_plot(
-    "manganeso_doble_acido", "Manganeso doble ácido")
-materia_organica_plot = univariate_plot(
-    "materia_organica", "Materia orgánica")
-ph_plot = univariate_plot("ph", "pH")
-potasio_plot = univariate_plot("potasio", "Potasio")
-sodio_plot = univariate_plot("sodio", "Sodio")
-zinc_olsen_plot = univariate_plot("zinc_olsen", "Zinc Olsen")
+variable_plot = univariate_plot("acidez", "Acidez")
+multivariable_plot = multivariate_plot("cod_municipio", "11001")
+# multivariable_plot = multivariate_plot("cod_municipio", "54001")
 
 right_col = dbc.Col(
-        [
-            dbc.Row([
-                eval(f"{variable}_plot").display()],
-                id=f"id_{variable}_plot") for variable in lstPlots
+        children=[
+            dbc.Row(
+                [
+                    variable_plot.display(),
+                ],
+                id="id-univariate-plot",
+            ),
+            dbc.Row(
+                [
+                    multivariable_plot.display(),
+                ],
+                id="id-mutlivariate-plot",
+            ),
         ],
         id="right-col",
         className="col-md-3 offset-md-9 ps-2 h-100 mt-2",
-    )
+)
 
 # ------------------------------------------------------------------------------
 

@@ -48,7 +48,9 @@ df = pd.read_csv('data/suelos_preprocesado.csv', nrows=100)
 # ------------------------------------------------------------------------------
 
 lstPlots = [
-    "acidez", "aluminio", "azufre", "boro", "calcio", "ce", "cice", "cobre",
-    "cobre_doble_acido", "fosforo", "hierro_doble_acido", "hierro_olsen",
-    "magnesio", "manganeso", "manganeso_doble_acido", "materia_organica", "ph",
-    "potasio", "sodio", "zinc_olsen"]
+    "acidez",
+    # "aluminio", "azufre", "boro", "calcio", "ce", "cice", "cobre",
+    # "cobre_doble_acido", "fosforo", "hierro_doble_acido", "hierro_olsen",
+    # "magnesio", "manganeso", "manganeso_doble_acido", "materia_organica", "ph",
+    # "potasio", "sodio", "zinc_olsen"
+]

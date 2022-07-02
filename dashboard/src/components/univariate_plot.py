@@ -1,8 +1,15 @@
-from turtle import bgcolor
-from dash import html, dcc
-import numpy as np
+# from operator import index
+# from re import A
+# from turtle import bgcolor
+from dash import dcc
+# import numpy as np
 import pandas as pd
-import dash_bootstrap_components as dbc
+# import dash_bootstrap_components as dbc
+# import matplotlib.pyplot as plt
+# import datetime
+from sklearn.decomposition import KernelPCA
+from sklearn.ensemble import IsolationForest
+
 
 from utils.load_data import Connection
 
@@ -11,13 +18,15 @@ from utils.load_data import Connection
 
 class univariate_plot:
     def __init__(
-                self, variable, titulo, tipo_agregado='departamento',
-                agregado=None):
+            self, variable='acidez', titulo='Acidez',
+            tipo_agregado='departamento', agregado=None):
         """Constructs all the attributes for kpiplot class"""
-        self.label = titulo
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
-        self.variable = variable
+        print(variable)
+        self.variable = variable if variable else 'acidez'
+        print(variable)
+        self.label = self.variable.capitalize()
 
     # --------------------------------------------------------------------------
 
@@ -57,6 +66,7 @@ class univariate_plot:
                     'mode': 'markers',
                     'name': 'Normal',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
+                    'hoverinfo': 'skip',
                     'marker': {"size": "3", "color": "#2196f3"},
                 },
                 {
@@ -66,6 +76,7 @@ class univariate_plot:
                     'mode': 'markers',
                     'name': 'Outlier',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
+                    'hoverinfo': 'skip',
                     'marker': {"size": "3", "color": "#ffeb3b"},
                 },
             ]
@@ -73,8 +84,8 @@ class univariate_plot:
             layout = dict(
                 autosize=True,
                 font={'color': '#ffffff'},
-                margin=dict(l=35, r=0, t=20, b=30),
-                height=120,
+                margin=dict(l=35, r=0, t=40, b=30),
+                height=200,
                 plot_bgcolor='rgba(48, 48, 48, 1)',
                 paper_bgcolor='rgba(48, 48, 48, 1)',
                 bgcolor='rgba(0, 0, 0, 0.5)',
@@ -119,6 +130,9 @@ class univariate_plot:
         layout = dcc.Graph(
             className="mb-1",
             figure=univariate_plot.figura(self),
-            id=f"{self.variable}-plot",
+            # id="id-univariable-plot",
         )
         return layout
+
+
+# ------------------------------------------------------------------------------

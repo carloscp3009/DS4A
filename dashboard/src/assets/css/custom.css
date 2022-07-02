@@ -31,8 +31,12 @@
 }
 #right-col{
   margin-bottom: 70px;
+  background-color: #303030;
 }
 
+#id_vriable_plot{
+  border-bottom: 1px solid #808080;
+}
 #bottom-bar {
   margin-left: 0.75rem;
   margin-right: 0.75rem;

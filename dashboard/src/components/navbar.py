@@ -7,8 +7,11 @@ from utils.load_data import (
     lstPlots,
 
     Connection)
-from components.central_container import (
-    acidez_plot, aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot)
+from components.central_container import variable_plot, multivariable_plot
+# (
+    # acidez_plot,
+    # aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot
+    # )
 
 # ------------------------------------------------------------------------------
 
@@ -171,11 +174,13 @@ def update_municipalities(departamento):
 # ------------------------------------------------------------------------------
 
 
-lstOutputs = [Output(f"id_{plot}_plot", "children") for plot in lstPlots]
 
 
 @callback(
-    lstOutputs,
+    [
+        Output("id-univariate-plot", "children"),
+        Output("id-mutlivariate-plot", "children")
+    ],
     [
         State('select-zone', 'value'),
         State('select-deparment', 'value'),
@@ -185,7 +190,8 @@ lstOutputs = [Output(f"id_{plot}_plot", "children") for plot in lstPlots]
     [Input('btnFiltrar', 'n_clicks')],
     prevent_initial_call=True
 )
-def update_plots(zona, departamento, municipio, feature, n_clicks):
+def update_variable_plot(
+                    zona, departamento, municipio, feature, n_clicks):
     try:
         agregado = tipo_agregado = ""
         if municipio:
@@ -200,29 +206,42 @@ def update_plots(zona, departamento, municipio, feature, n_clicks):
         else:
             agregado = None
             tipo_agregado = "departamento"
-            # return [no_update for i in range(len(lstOutputs))]
-        lst = []
+
+        variable_plot.agregado = agregado
+        variable_plot.tipo_agregado = tipo_agregado
+        variable_plot.variable = feature if feature else 'acidez'
         for item in lstVariables:
-            variable = item["value"]
-            eval(f"{variable}_plot").agregado = agregado
-            eval(f"{variable}_plot").tipo_agregado = tipo_agregado
-            nuevo_grafico = eval(f"{variable}_plot").display()
-            lst.append([nuevo_grafico])
+            if item['value'] == feature:
+                variable_plot.label = item['label']
+                break
+        nuevo_grafico = variable_plot.display()
+
+        # ----------------------------------------------------------------------
+
+        multivariable_plot.agregado = agregado
+        multivariable_plot.tipo_agregado = tipo_agregado
+        # multivariable_plot.variable = feature if feature else 'acidez'
+        # for item in lstVariables:
+            # if item['value'] == feature:
+                # multivariable_plot.label = item['label']
+                # break
+        nuevo_grafico_multivariate = multivariable_plot.display()
+
     except Exception as e:
-        print("update_plots:", e)
-    return tuple(lst)
+        print("update_variable_plot:", e)
+    return [nuevo_grafico, nuevo_grafico_multivariate]
 
 
 # ------------------------------------------------------------------------------
 
 
-@callback(
-    [Output('btnFiltrar', 'n_clicks')],
-    [Input('select-feature', 'value')],
-    prevent_initial_call=True)
-def reset_plots(feature):
-    if feature == "":
-        return ["1"]
-    return [0]
+# @callback(
+#     [Output('btnFiltrar', 'n_clicks')],
+#     [Input('select-feature', 'value')],
+#     prevent_initial_call=True)
+# def reset_plots(feature):
+#     if feature == "":
+#         return ["1"]
+#     return [0]
 
 # ------------------------------------------------------------------------------
