@@ -28,8 +28,8 @@ left_col = dbc.Col(
 # ------------------------------------------------------------------------------
 
 variable_plot = univariate_plot("acidez", "Acidez")
-multivariable_plot = multivariate_plot("cod_municipio", "11001")
-# multivariable_plot = multivariate_plot("cod_municipio", "54001")
+# multivariable_plot = multivariate_plot()
+multivariable_plot = multivariate_plot("cod_municipio", "None")
 
 right_col = dbc.Col(
         children=[
@@ -44,6 +44,7 @@ right_col = dbc.Col(
                     multivariable_plot.display(),
                 ],
                 id="id-mutlivariate-plot",
+                className="mt-1",
             ),
         ],
         id="right-col",

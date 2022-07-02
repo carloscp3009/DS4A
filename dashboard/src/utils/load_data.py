@@ -30,20 +30,23 @@ lstVariables = [{"label": row[1], "value": row[0]} for row in data]
 # ------------------------------------------------------------------------------
 
 lstDepartamentos = []
-query = 'SELECT codigo, departamento FROM departamentos ORDER BY departamento'
+query = '''
+    SELECT cod_departamento, departamento
+    FROM departamentos
+    ORDER BY departamento'''
 data = Connection.get_data(query)
 lstDepartamentos = [{"label": row[1], "value": row[0]} for row in data]
 
 # ------------------------------------------------------------------------------
 
 lstZonas = {}
-query = 'SELECT codigo, zona FROM zonas'
+query = 'SELECT cod_region, region FROM zonas'
 data = Connection.get_data(query)
 lstZonas = [{"label": row[1], "value": row[0]} for row in data]
 
 # ------------------------------------------------------------------------------
 
-df = pd.read_csv('data/suelos_preprocesado.csv', nrows=100)
+# df = pd.read_csv('data/suelos_preprocesado.csv', nrows=100)
 
 # ------------------------------------------------------------------------------
 

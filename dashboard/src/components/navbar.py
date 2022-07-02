@@ -218,13 +218,10 @@ def update_variable_plot(
 
         # ----------------------------------------------------------------------
 
-        multivariable_plot.agregado = agregado
-        multivariable_plot.tipo_agregado = tipo_agregado
-        # multivariable_plot.variable = feature if feature else 'acidez'
-        # for item in lstVariables:
-            # if item['value'] == feature:
-                # multivariable_plot.label = item['label']
-                # break
+        if agregado:
+            multivariable_plot.agregado = agregado
+        if tipo_agregado:
+            multivariable_plot.tipo_agregado = tipo_agregado
         nuevo_grafico_multivariate = multivariable_plot.display()
 
     except Exception as e:

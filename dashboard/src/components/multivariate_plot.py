@@ -2,7 +2,9 @@
 # from re import A
 # from turtle import bgcolor
 from cgi import print_directory
+import re
 from dash import dcc
+from matplotlib.ft2font import LOAD_VERTICAL_LAYOUT
 import pandas as pd
 # import dash_bootstrap_components as dbc
 # import matplotlib.pyplot as plt
@@ -85,38 +87,76 @@ class multivariate_plot:
 
     # --------------------------------------------------------------------------
 
+    def get_layout(self, num_samples=0):
+        layout = dict(
+            autosize=True,
+            font={'color': '#ffffff'},
+            margin=dict(l=35, r=0, t=40, b=30),
+            height=200,
+            plot_bgcolor='rgba(48, 48, 48, 1)',
+            paper_bgcolor='rgba(48, 48, 48, 1)',
+            bgcolor='rgba(0, 0, 0, 0.5)',
+            legend=dict(
+                orientation="h",
+                xanchor="right",
+                yanchor="bottom",
+                y=0.95,
+                x=1,
+                bgcolor="rgba(0, 0, 0, 0)",
+                font=dict(
+                    size=8,
+                ),
+            ),
+            xaxis=dict(
+                title='',
+                gridcolor='gray',
+                zerolinecolor='white',
+            ),
+            yaxis=dict(
+                # type='log',
+                gridcolor='gray',
+                zerolinecolor='white',
+            ),
+            title={
+                'text': f"{self.label} ({num_samples})",
+                'x': 0.5,
+                'y': 0.95,
+                'font': {'size': 12},
+            },
+        )
+        return layout
+
+    # --------------------------------------------------------------------------
+
     # @staticmethod
     def figura(self):
-        print("============================================================")
         try:
-            query = '''
+            query = f"""
                 SELECT
                     id, ph, materia_organica, fosforo, calcio, magnesio,
                     potasio, sodio, cice, ce, boro
                 FROM analisis
-                WHERE %s = '%s'
-            ''' % (self.tipo_agregado, self.agregado)
+                WHERE {self.tipo_agregado} = '{self.agregado}' """
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
-
-            print("Antes de borrar nulos:")
-            # print("info:", self.datos.info())
-            print("cantidad: ", self.datos.shape[0])
 
             null_values = self.datos[self.datos.isnull().any(1)]
             self.datos = \
                 self.datos.drop(null_values.index).reset_index(drop=True)
 
-            print("Después de borrar nulos:")
-            # print("info:", self.datos.info())
-            print("cantidad: ", self.datos.shape[0])
+            layout = self.get_layout()
+            if self.datos.empty:
+                fig = dict(data=[], layout=layout)
+                return fig
 
             df_outliers = self.outliers_iforest()
 
             outliers_mask = df_outliers['Prediction'] == 'Outlier'
             no_outliers_mask = df_outliers['Prediction'] == 'No outlier'
 
-            print("Cantidad de outliers:", df_outliers[outliers_mask].shape[0])
+            num_samples = self.datos.shape[0]
+            num_outliers = df_outliers[outliers_mask].shape[0]
+            num_no_outliers = df_outliers[no_outliers_mask].shape[0]
 
             datadict = [
                 {
@@ -124,7 +164,7 @@ class multivariate_plot:
                     'y': df_outliers[no_outliers_mask]['Artificial variable Y'],
                     'type': 'scatter',
                     'mode': 'markers',
-                    'name': 'Normal',
+                    'name': f'Normal ({num_no_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
                     'marker': {"size": "3", "color": "#2196f3"},
                 },
@@ -133,49 +173,11 @@ class multivariate_plot:
                     'y': df_outliers[outliers_mask]['Artificial variable Y'],
                     'type': 'scatter',
                     'mode': 'markers',
-                    'name': 'Outlier',
+                    'name': f'Outliers ({num_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
                     'marker': {"size": "3", "color": "#ffeb3b"},
                 },
             ]
-
-            layout = dict(
-                autosize=True,
-                font={'color': '#ffffff'},
-                margin=dict(l=35, r=0, t=40, b=30),
-                height=180,
-                plot_bgcolor='rgba(48, 48, 48, 1)',
-                paper_bgcolor='rgba(48, 48, 48, 1)',
-                bgcolor='rgba(0, 0, 0, 0.5)',
-                legend=dict(
-                    orientation="h",
-                    xanchor="right",
-                    yanchor="top",
-                    y=0,
-                    x=1,
-                    bgcolor="rgba(0, 0, 0, 0)",
-                    font=dict(
-                        size=8,
-                    ),
-                ),
-                xaxis=dict(
-                    title='',
-                    # type='log',
-                    gridcolor='gray',
-                    zerolinecolor='white',
-                ),
-                yaxis=dict(
-                    # type='log',
-                    gridcolor='gray',
-                    zerolinecolor='white',
-                ),
-                title={
-                    'text': self.label,
-                    'x': 0.5,
-                    'y': 0.95,
-                    'font': {'size': 12},
-                },
-            )
 
             fig = dict(data=datadict, layout=layout)
         except Exception as e:

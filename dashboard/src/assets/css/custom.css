@@ -19,7 +19,7 @@
 }
 #central-container {
   height: calc(100vh - 140px);
-  margin-top: 70px;
+  padding-top: 70px;
   max-width: 100%;
   width: 100vw;
 }
@@ -31,12 +31,9 @@
 }
 #right-col{
   margin-bottom: 70px;
-  background-color: #303030;
+  /* background-color: #303030; */
 }
 
-#id_vriable_plot{
-  border-bottom: 1px solid #808080;
-}
 #bottom-bar {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
