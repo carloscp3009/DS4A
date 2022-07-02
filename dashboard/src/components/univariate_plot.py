@@ -1,6 +1,6 @@
-from dash import dcc
-import numpy as np
 import pandas as pd
+
+from dash import dcc
 
 from utils.load_data import Connection
 
@@ -10,18 +10,16 @@ from utils.load_data import Connection
 class univariate_plot:
     def __init__(
                 self, variable='acidez',
-                titulo='Análisis univariado de outliers',
                 tipo_agregado='cod_municipio', agregado=None):
-        """Constructs all the attributes for kpiplot class"""
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
-        self.variable = variable if variable else 'acidez'
-        self.label = 'Análisis univariado de outliers'
+        self.variable = variable
+        self.label = 'Acidez'
 
     # --------------------------------------------------------------------------
 
     def get_layout(self, num_samples=0):
-        """Returns the layout of the card"""
+        """Returns the layout of the plot"""
         layout = dict(
             autosize=True,
             font={'color': '#ffffff'},
@@ -38,7 +36,7 @@ class univariate_plot:
                 x=1,
                 bgcolor="rgba(0, 0, 0, 0)",
                 font=dict(
-                    size=8,
+                    size=10,
                 ),
             ),
             xaxis=dict(
@@ -65,13 +63,24 @@ class univariate_plot:
     @staticmethod
     def figura(self):
         try:
-            query = '''
-                SELECT id, %s as variable
-                FROM analisis
-                WHERE %s = '%s'
-            ''' % (self.variable, self.tipo_agregado, self.agregado)
+            query = f"""
+                SELECT
+                    id, {self.variable} as variable
+                FROM
+                    analisis a INNER JOIN
+                    municipios m ON a.cod_municipio = m.cod_municipio INNER JOIN
+                    departamentos d ON m.cod_departamento = d.cod_departamento """
+            if self.tipo_agregado == 'zona':
+                query += f"WHERE `{self.agregado}` = 1"
+            else:
+                query += f"WHERE m.{self.tipo_agregado} = '{self.agregado}'"
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
+
+            if self.datos.empty:
+                layout = self.get_layout()
+                fig = dict(data=[], layout=layout)
+                return fig
 
             self.datos['outlier'] = False
 
@@ -117,10 +126,10 @@ class univariate_plot:
                 },
             ]
 
-            layout = self.get_layout()
+            layout = self.get_layout(num_samples)
             fig = dict(data=datadict, layout=layout)
         except Exception as e:
-            print("figure:", e)
+            print("univariate_plot.figure:", e)
         return fig
 
     # --------------------------------------------------------------------------

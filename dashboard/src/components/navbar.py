@@ -1,4 +1,5 @@
-from dash import html, Input, Output, State, callback, no_update
+from dash import html, Input, Output, State, callback
+import dash
 import dash_bootstrap_components as dbc
 from utils.load_data import (
     lstVariables,
@@ -106,8 +107,6 @@ navbar = dbc.Navbar(
     [Input('select-zone', 'value')],
     prevent_initial_call=True)
 def update_deparments(zona):
-    print(zona)
-    lst = []
     try:
         if zona:
             query = f'''
@@ -115,14 +114,13 @@ def update_deparments(zona):
 	                cod_departamento, departamento
                 FROM
 	                departamentos
-                WHERE {zona} = 1
+                WHERE `{zona}` = 1
                 ORDER BY departamento'''
         else:
             query = '''
                 SELECT cod_departamento, departamento
                 FROM departamentos
                 ORDER BY departamento'''
-        print(query)
         data = Connection.get_data(query)
         lstDepartamentos = [{"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
@@ -169,9 +167,6 @@ def update_municipalities(departamento):
 
 # ------------------------------------------------------------------------------
 
-
-
-
 @callback(
     [
         Output("id-univariate-plot", "children"),
@@ -186,25 +181,24 @@ def update_municipalities(departamento):
     [Input('btnFiltrar', 'n_clicks')],
     prevent_initial_call=True
 )
-def update_variable_plot(
+def update_outliers_plot(
                     zona, departamento, municipio, feature, n_clicks):
     try:
         agregado = tipo_agregado = ""
         if municipio:
-            agregado = municipio
-            tipo_agregado = "cod_municipio"
+            variable_plot.agregado = municipio
+            variable_plot.tipo_agregado = "cod_municipio"
         elif departamento:
-            agregado = departamento
-            tipo_agregado = "cod_departamento"
+            variable_plot.agregado = departamento
+            variable_plot.tipo_agregado = "cod_departamento"
         elif zona:
-            agregado = zona
-            tipo_agregado = "cod_zona"
+            variable_plot.agregado = zona
+            variable_plot.tipo_agregado = 'zona'
         else:
-            agregado = None
-            tipo_agregado = "departamento"
+            # agregado = None
+            # tipo_agregado = "departamento"
+            return [dash.no_update, dash.no_update]
 
-        variable_plot.agregado = agregado
-        variable_plot.tipo_agregado = tipo_agregado
         variable_plot.variable = feature if feature else 'acidez'
         for item in lstVariables:
             if item['value'] == feature:
@@ -221,7 +215,7 @@ def update_variable_plot(
         nuevo_grafico_multivariate = multivariable_plot.display()
 
     except Exception as e:
-        print("update_variable_plot:", e)
+        print("update_outliers_plot:", e)
     return [nuevo_grafico, nuevo_grafico_multivariate]
 
 

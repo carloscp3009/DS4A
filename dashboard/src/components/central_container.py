@@ -15,7 +15,7 @@ left_col = dbc.Col(
             ),
         ],
         id="left-col",
-        className="col-12 col-md-9 px-2",
+        className="col-12 col-md-8 px-2",
     )
 
 # ------------------------------------------------------------------------------

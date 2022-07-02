@@ -1,13 +1,17 @@
 import dash_bootstrap_components as dbc
 from components.univariate_plot import univariate_plot
 from components.multivariate_plot import multivariate_plot
+from dash import html
 
-variable_plot = univariate_plot("acidez", "Acidez")
+variable_plot = univariate_plot()
 multivariable_plot = multivariate_plot("cod_municipio", "None")
 
 outliers_tab_content = dbc.Card(
     dbc.CardBody(
         [
+            html.Div(
+                "Análisis univariado de outliers",
+                className="card-text mb-0 text-center"),
             dbc.Row(
                 [
                     variable_plot.display(),
