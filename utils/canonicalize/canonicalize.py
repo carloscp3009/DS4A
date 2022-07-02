@@ -1,5 +1,4 @@
 import pandas as pd
-from tqdm import tqdm
 from thefuzz import fuzz
 
 def fuzzy_compare_rows(
@@ -25,7 +24,8 @@ def fuzzy_canonicalize(
         canonical:pd.DataFrame,
         fuzzy_weights:dict["col","weight"],
         exact_weights:dict["col","weigth"]={},
-        report_found_values=True
+        report_found_values=True,
+        progress=False
     ):
     """
     Given the `queries` dataframe, whose rows are possibly mispelled strings identifiers,
@@ -40,16 +40,30 @@ def fuzzy_canonicalize(
     With the `report_found_values` you can control if the canon founded values
     are shown in the result.
     """
-    scores = queries.apply(
-        lambda x: canonical.apply(
-            fuzzy_compare_rows,
+    if progress:
+        from tqdm import tqdm
+        tqdm.pandas()
+        scores = queries.progress_apply(
+            lambda x: canonical.apply(
+                fuzzy_compare_rows,
+                axis=1,
+                reference=x,
+                fuzzy_weights=fuzzy_weights,
+                exact_weights=exact_weights
+            ),
             axis=1,
-            reference=x,
-            fuzzy_weights=fuzzy_weights,
-            exact_weights=exact_weights
-        ),
-        axis=1,
-    )
+        )
+    else:
+        scores = queries.apply(
+            lambda x: canonical.apply(
+                fuzzy_compare_rows,
+                axis=1,
+                reference=x,
+                fuzzy_weights=fuzzy_weights,
+                exact_weights=exact_weights
+            ),
+            axis=1,
+        )
     results = pd.concat([
             scores.max(axis=1).rename("match_score"),
             scores.idxmax(axis=1).rename("canon_index")
@@ -69,7 +83,7 @@ def fuzzy_scoped_canonicalize(
         fuzzy_weights:dict["col","weight"],
         exact_weights:dict["col","weigth"]={},
         report_found_values=True,
-        progress=True
+        progress=False
     ):
     """
     Same as `fuzzy_canonicalize` but grouping the queries by the `on_column`.
@@ -83,9 +97,17 @@ def fuzzy_scoped_canonicalize(
     The values of the `scoping` dict should be indexes of `canonical`.
     """
     group_results = []
-    for pivot,group in tqdm(queries.groupby(on_column),disable=not progress, ncols=100):
-        filtered_canon = canonical.loc[scoping[pivot]]
-        group_results.append(
-            fuzzy_canonicalize(group,filtered_canon,fuzzy_weights,exact_weights,report_found_values)
-        )
+    if progress:
+        from tqdm import tqdm
+        for pivot,group in tqdm(queries.groupby(on_column)):
+            filtered_canon = canonical.loc[scoping[pivot]]
+            group_results.append(
+                fuzzy_canonicalize(group,filtered_canon,fuzzy_weights,exact_weights,report_found_values)
+            )
+    else:
+        for pivot,group in queries.groupby(on_column):
+            filtered_canon = canonical.loc[scoping[pivot]]
+            group_results.append(
+                fuzzy_canonicalize(group,filtered_canon,fuzzy_weights,exact_weights,report_found_values)
+            )
     return pd.concat(group_results).sort_index().sort_values("match_score",ascending=False)
