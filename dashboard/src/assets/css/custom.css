@@ -31,9 +31,15 @@
 }
 #right-col{
   margin-bottom: 70px;
-  /* background-color: #303030; */
 }
-
+#right-col .card {
+  margin-top: 0px !important;
+  border-left: 1px solid #444444;
+}
+.plot-separator{
+  background-color: #222222;
+  height: 0.5em;
+}
 #bottom-bar {
   margin-left: 0.75rem;
   margin-right: 0.75rem;

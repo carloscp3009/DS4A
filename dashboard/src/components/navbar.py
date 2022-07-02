@@ -7,7 +7,7 @@ from utils.load_data import (
     lstPlots,
 
     Connection)
-from components.central_container import variable_plot, multivariable_plot
+from components.tabs.outliers import variable_plot, multivariable_plot
 # (
     # acidez_plot,
     # aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot
@@ -106,22 +106,23 @@ navbar = dbc.Navbar(
     [Input('select-zone', 'value')],
     prevent_initial_call=True)
 def update_deparments(zona):
+    print(zona)
     lst = []
     try:
         if zona:
-            query = '''
+            query = f'''
                 SELECT
-	                departamentos.codigo, departamentos.departamento
+	                cod_departamento, departamento
                 FROM
-	                departamentos INNER JOIN
-	                zonas_departamentos ON departamentos.codigo = zonas_departamentos.cod_departamento
-                WHERE zonas_departamentos.cod_zona='%s'
-                ORDER BY departamentos.departamento''' % zona
+	                departamentos
+                WHERE {zona} = 1
+                ORDER BY departamento'''
         else:
             query = '''
-                SELECT codigo, departamento
+                SELECT cod_departamento, departamento
                 FROM departamentos
                 ORDER BY departamento'''
+        print(query)
         data = Connection.get_data(query)
         lstDepartamentos = [{"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
@@ -162,7 +163,7 @@ def update_municipalities(departamento):
                 ORDER BY municipio''' % departamento
         else:
             query = '''
-                SELECT codigo, municipio
+                SELECT cod_municipio, municipio
                 FROM municipios
                 ORDER BY municipio'''
         data = Connection.get_data(query)

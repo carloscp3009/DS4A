@@ -1,4 +1,5 @@
 import dash_bootstrap_components as dbc
+from dash import html
 # import pandas as pd
 # import numpy as np
 
@@ -6,7 +7,7 @@ import dash_bootstrap_components as dbc
 # from utils.map import map
 from components.univariate_plot import univariate_plot
 from components.multivariate_plot import multivariate_plot
-# from utils.load_data import lstPlots
+from components.tabs.outliers import outliers_tab_content
 
 # ------------------------------------------------------------------------------
 
@@ -27,28 +28,53 @@ left_col = dbc.Col(
 
 # ------------------------------------------------------------------------------
 
-variable_plot = univariate_plot("acidez", "Acidez")
-# multivariable_plot = multivariate_plot()
-multivariable_plot = multivariate_plot("cod_municipio", "None")
+
+tab2_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("This is tab 2!", className="card-text"),
+            dbc.Button("Don't click here", color="danger"),
+        ]
+    ),
+    className="mt-3",
+)
+tab3_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("This is tab 2!", className="card-text"),
+            dbc.Button("Don't click here", color="danger"),
+        ]
+    ),
+    className="mt-3",
+)
+
+tabs = dbc.Tabs(
+    [
+        dbc.Tab(outliers_tab_content, label="Outliers"),
+        dbc.Tab(tab2_content, label="Predictions"),
+        dbc.Tab(tab3_content, label="Statistics"),
+    ]
+)
 
 right_col = dbc.Col(
-        children=[
-            dbc.Row(
-                [
-                    variable_plot.display(),
-                ],
-                id="id-univariate-plot",
-            ),
-            dbc.Row(
-                [
-                    multivariable_plot.display(),
-                ],
-                id="id-mutlivariate-plot",
-                className="mt-1",
-            ),
+        [
+            tabs,
+            # dbc.Row(
+            #     [
+            #         variable_plot.display(),
+            #     ],
+            #     id="id-univariate-plot",
+            # ),
+            # dbc.Row(
+            #     [
+            #         multivariable_plot.display(),
+            #     ],
+            #     id="id-mutlivariate-plot",
+            #     className="mt-1",
+            # ),
         ],
         id="right-col",
-        className="col-md-3 offset-md-9 ps-2 h-100 mt-2",
+        className="col-md-4 offset-md-8 ps-2 h-100 mt-2",
 )
 
 # ------------------------------------------------------------------------------
