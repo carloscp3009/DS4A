@@ -26,7 +26,6 @@ class univariate_plot:
             autosize=True,
             font={'color': '#ffffff'},
             margin=dict(l=35, r=0, t=40, b=30),
-            height=180,
             plot_bgcolor='rgba(48, 48, 48, 1)',
             paper_bgcolor='rgba(48, 48, 48, 1)',
             bgcolor='rgba(0, 0, 0, 0.5)',

@@ -1,5 +1,6 @@
 import os
 import json
+from tkinter import Variable
 from matplotlib.pyplot import colorbar
 import plotly.express as px
 import pandas as pd
@@ -18,6 +19,7 @@ class choropleth_plot:
         self.label = "Análisis multivariado de outliers"
         self.datos = None
         self.variable = variable
+        self.label = variable.capitalize()
 
     # --------------------------------------------------------------------------
 
@@ -26,7 +28,7 @@ class choropleth_plot:
             query = f"""
                 SELECT
                     a.cod_municipio, m.municipio,
-                    AVG(a.{self.variable}) as variable
+                    AVG(a.{self.variable}) AS `{self.label}`
                 FROM
                     analisis a INNER JOIN
                     municipios m ON a.cod_municipio = m.cod_municipio
@@ -47,28 +49,34 @@ class choropleth_plot:
                 self.datos,
                 geojson=geo_municipios,
                 locations="cod_municipio",
-                color='variable',
+                color=self.label,
                 color_continuous_scale="Portland",
-                # hover_data={  # select the columns that will appear in the tooltip
-                #     "cod_municipio": False,
-                #     "municipio": True
-                #     'variable': True,
-                # },
-                center={"lat": 4, "lon": -15 * 5},  # Colombia is GMT-5, each hour is 15°
+                hover_name="municipio",
+                hover_data={
+                    "cod_municipio": False,
+                    "municipio": False,
+                    f"{self.label}": True,
+                },
+                # Colombia is GMT-5, each hour is 15°
+                center={"lat": 4, "lon": -15 * 5},
                 zoom=4.5,
-                # mapbox_style="carto-darkmatter",
-                mapbox_style="carto-darkmatter",
-                # height=550,
-                opacity=0.3,
-                range_color=self.datos['variable'].quantile([0, 0.98]).tolist(),
-                template='custom_dark',
+                mapbox_style="carto-positron",
+                opacity=0.4,
+                range_color=self.datos[self.label].quantile([0, 0.98]).tolist(),
             )
 
+            fig.update_layout(paper_bgcolor='#303030', plot_bgcolor='#303030')
+
             fig.update_layout(autosize=True, margin=dict(l=0, r=0, t=0, b=0))
-            fig.update_traces(marker_line_width=0)  # clear contours
+            fig.update_traces(
+                marker=dict(
+                    line=dict(
+                        width=1,
+                        color='rgba(0, 0, 0, 0.1)'
+                    )
+                ),
+            )
             fig.layout.coloraxis.colorbar.title = ''
-            # fig.update_geos(oceancolor='rgba(0, 0, 0, 0)')
-            # fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)'))
 
         except Exception as e:
             print("figure:", e)

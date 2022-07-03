@@ -9,7 +9,7 @@ from utils.load_data import (
     Connection)
 from components.tabs.outliers import variable_plot, multivariable_plot
 from components.central_container import my_choropleth_map
-from utils.map import map
+# from utils.map import map
 import pandas as pd
 # (
     # acidez_plot,
@@ -176,8 +176,9 @@ def update_municipalities(departamento):
 @callback(
     [
         Output("id-univariate-plot", "children"),
-        Output("id-mutlivariate-plot", "children"),
-        Output("id-choropleth-map", "children")
+        Output("id-multivariate-plot", "children"),
+        Output("id-choropleth-map", "children"),
+        Output("choropleth-title", "children")
     ],
     [
         State('select-zone', 'value'),
@@ -190,6 +191,16 @@ def update_municipalities(departamento):
 )
 def update_outliers_plot(
                     zona, departamento, municipio, feature, n_clicks):
+    if feature:
+        variable = feature
+        for item in lstVariables:
+            if item['value'] == feature:
+                feature_label = item['label']
+                break
+    else:
+        variable = "acidez"
+        feature_label = "Acidez"
+
     try:
         # General
         agregado = tipo_agregado = ""
@@ -210,11 +221,8 @@ def update_outliers_plot(
         variable_plot.agregado = agregado
         variable_plot.tipo_agregado = tipo_agregado
 
-        variable_plot.variable = feature if feature else 'acidez'
-        for item in lstVariables:
-            if item['value'] == feature:
-                variable_plot.label = item['label']
-                break
+        variable_plot.variable = variable
+        variable_plot.label = feature_label
         nuevo_grafico = variable_plot.display()
 
         # Gráfico multivarido de outliers
@@ -226,22 +234,15 @@ def update_outliers_plot(
         nuevo_grafico_multivariate = multivariable_plot.display()
 
         # Choropleth
-        if feature:
-            my_choropleth_map.variable = feature
-        else:
-            my_choropleth_map.variable = 'acidez'
+        my_choropleth_map.variable = variable
+        my_choropleth_map.label = feature_label
 
         nuevo_choropleth = my_choropleth_map.display()
-
-        # AGROSAVIA_df[feature] = AGROSAVIA_df[feature].astype(float)
-        # col = feature
-        # data_req = AGROSAVIA_df.groupby("MUN_ID")[col].mean().to_frame()
-        # data_req["Nombre"] = DANE_df.Municipio
-        # data_req.reset_index(inplace=True)
-
     except Exception as e:
         print("update_outliers_plot:", e)
-    return [nuevo_grafico, nuevo_grafico_multivariate, nuevo_choropleth]
+    return [
+        nuevo_grafico, nuevo_grafico_multivariate,
+        nuevo_choropleth, feature_label]
 
 # ------------------------------------------------------------------------------
 

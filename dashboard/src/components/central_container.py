@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 from components.choropleth_plot import choropleth_plot
-from utils.map import map
+# from utils.map import map
 from components.tabs import tabs
 
 # ------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ my_choropleth_map = choropleth_plot()
 left_col = dbc.Col(
         [
             html.Div(
-                "Materia organica",
+                "Acidez",
                 id="choropleth-title",
             ),
             dbc.Container(
@@ -42,26 +42,3 @@ central_container = dbc.Container(
         id="central-container",
         className="g-0 ms-auto flex-nowrap row pb-2",
     )
-
-# ------------------------------------------------------------------------------
-
-# lstOutputs = [Output(f"id_{plot}_plot", "children") for plot in lstPlots]
-
-
-# @callback(
-#     lstOutputs,
-#     [State('select-deparment', 'value')],
-#     [Input('btnFiltrar', 'n_clicks')],
-#     prevent_initial_call=True
-# )
-# def update_plots(departamento, n_clicks):
-#     try:
-#         lst = []
-#         for item in lstVariables:
-#             variable = item["value"]
-#             eval(f"{variable}_plot").agregado = departamento
-#             nuevo_grafico = eval(f"{variable}_plot").display()
-#             lst.append([nuevo_grafico])
-#     except Exception as e:
-#         print("update_plot:", e)
-#     return tuple(lst)
