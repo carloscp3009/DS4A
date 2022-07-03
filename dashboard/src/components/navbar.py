@@ -63,6 +63,9 @@ filters_bar = dbc.Row(
                     color="danger",
                     className="ms-1",
                 ),
+                dbc.Button(
+                    id='btnClearHidden',
+                    style=dict(display='none'))
             ],
             className="col-auto"
         )
@@ -134,11 +137,12 @@ def update_deparments(zona):
     [
         Output('select-zone', 'value'),
         Output('select-feature', 'value'),
+        Output('btnClearHidden', 'n_clicks'),
     ],
     [Input('btnReset', 'n_clicks')],
     prevent_initial_call=True)
 def reset_filters(n_clicks):
-    return ["", ""]
+    return ["", "", "1"]
 
 # ------------------------------------------------------------------------------
 
@@ -184,20 +188,24 @@ def update_municipalities(departamento):
 def update_outliers_plot(
                     zona, departamento, municipio, feature, n_clicks):
     try:
+        # General
         agregado = tipo_agregado = ""
         if municipio:
-            variable_plot.agregado = municipio
-            variable_plot.tipo_agregado = "cod_municipio"
+            agregado = municipio
+            tipo_agregado = "cod_municipio"
         elif departamento:
-            variable_plot.agregado = departamento
-            variable_plot.tipo_agregado = "cod_departamento"
+            agregado = departamento
+            tipo_agregado = "cod_departamento"
         elif zona:
-            variable_plot.agregado = zona
-            variable_plot.tipo_agregado = 'zona'
+            agregado = zona
+            tipo_agregado = 'zona'
         else:
-            # agregado = None
-            # tipo_agregado = "departamento"
-            return [dash.no_update, dash.no_update]
+            tipo_agregado = "cod_municipio"
+            # return [dash.no_update, dash.no_update]
+
+        # Grafico de univariado de outliers
+        variable_plot.agregado = agregado
+        variable_plot.tipo_agregado = tipo_agregado
 
         variable_plot.variable = feature if feature else 'acidez'
         for item in lstVariables:
@@ -206,29 +214,26 @@ def update_outliers_plot(
                 break
         nuevo_grafico = variable_plot.display()
 
-        # ----------------------------------------------------------------------
-
+        # Gráfico multivarido de outliers
         if agregado:
             multivariable_plot.agregado = agregado
         if tipo_agregado:
             multivariable_plot.tipo_agregado = tipo_agregado
+
         nuevo_grafico_multivariate = multivariable_plot.display()
 
     except Exception as e:
         print("update_outliers_plot:", e)
     return [nuevo_grafico, nuevo_grafico_multivariate]
 
-
 # ------------------------------------------------------------------------------
 
 
-# @callback(
-#     [Output('btnFiltrar', 'n_clicks')],
-#     [Input('select-feature', 'value')],
-#     prevent_initial_call=True)
-# def reset_plots(feature):
-#     if feature == "":
-#         return ["1"]
-#     return [0]
+@callback(
+    [Output('btnFiltrar', 'n_clicks')],
+    [Input('btnClearHidden', 'n_clicks')],
+    prevent_initial_call=True)
+def reset_plots(feature):
+    return ["1"]
 
 # ------------------------------------------------------------------------------

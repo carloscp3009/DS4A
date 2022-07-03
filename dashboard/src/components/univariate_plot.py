@@ -9,8 +9,10 @@ from utils.load_data import Connection
 
 class univariate_plot:
     def __init__(
-                self, variable='acidez',
-                tipo_agregado='cod_municipio', agregado=None):
+                self,
+                variable='acidez',
+                tipo_agregado='cod_municipio',
+                agregado=None):
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
         self.variable = variable
@@ -60,7 +62,6 @@ class univariate_plot:
 
     # --------------------------------------------------------------------------
 
-    @staticmethod
     def figura(self):
         try:
             query = f"""
@@ -69,7 +70,8 @@ class univariate_plot:
                 FROM
                     analisis a INNER JOIN
                     municipios m ON a.cod_municipio = m.cod_municipio INNER JOIN
-                    departamentos d ON m.cod_departamento = d.cod_departamento """
+                    departamentos d ON m.cod_departamento = d.cod_departamento
+                """
             if self.tipo_agregado == 'zona':
                 query += f"WHERE `{self.agregado}` = 1"
             else:
@@ -139,6 +141,6 @@ class univariate_plot:
         layout = dcc.Graph(
             className="mb-1",
             figure=univariate_plot.figura(self),
-            id=f"{self.variable}-plot",
+            # id=f"{self.variable}-plot",
         )
         return layout

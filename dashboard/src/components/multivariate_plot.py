@@ -1,14 +1,6 @@
-# from operator import index
-# from re import A
-# from turtle import bgcolor
-from cgi import print_directory
-import re
-from dash import dcc
-from matplotlib.ft2font import LOAD_VERTICAL_LAYOUT
 import pandas as pd
-# import dash_bootstrap_components as dbc
-# import matplotlib.pyplot as plt
-# import datetime
+
+from dash import dcc
 from sklearn.decomposition import KernelPCA
 from sklearn.ensemble import IsolationForest
 from sklearn import preprocessing
@@ -31,55 +23,62 @@ class multivariate_plot:
     def outliers_iforest(self):
         try:
             df_region = self.datos.copy()
-            # Normalización de los datos
-            df_region = df_region[
-                [
-                    'ph', 'materia_organica', 'fosforo', 'calcio', 'magnesio', 'potasio', 'sodio', 'cice', 'ce', 'boro'
-                ]
-            ]
 
-            #Data is normalized with MinMax()
+            # Normalización de los datos
+            df_region = df_region[[
+                'ph', 'materia_organica', 'fosforo', 'calcio', 'magnesio', 'potasio', 'sodio', 'cice', 'ce', 'boro'
+            ]]
+
+            # Data is normalized with MinMax()
             min_max_scaler = preprocessing.MinMaxScaler()
             df_region = min_max_scaler.fit_transform(df_region)
             df_region = pd.DataFrame(df_region)
             df_region = df_region.rename(
-                columns = {
+                columns={
                     0: 'ph',
-                    1: 'materia_organica', 2: 'fosforo',
-                    3: 'azufre', 4: 'acidez', 5: 'aluminio',
+                    1: 'materia_organica',
+                    2: 'fosforo',
+                    3: 'azufre',
+                    4: 'acidez',
+                    5: 'aluminio',
                     6: 'calcio',
-                    7: 'magnesio', 8: 'potasio', 9: 'sodio', 10: 'cice',
-                    11: 'ce', 12: 'hierro_olsen', 13: 'cobre', 14: 'manganeso',
-                    15: 'zinc_olsen', 16: 'boro'
+                    7: 'magnesio',
+                    8: 'potasio',
+                    9: 'sodio',
+                    10: 'cice',
+                    11: 'ce',
+                    12: 'hierro_olsen',
+                    13: 'cobre',
+                    14: 'manganeso',
+                    15: 'zinc_olsen',
+                    16: 'boro'
                 }
             )
-            print(df_region.head())
-
 
             kpca = KernelPCA(n_components=2, kernel='poly')
-            model = kpca.fit(df_region)
+            kpca.fit(df_region)
             dt_train = kpca.transform(df_region)
 
             # ISOLATION FOREST MODEL
             iso_forest = IsolationForest(n_estimators=50, contamination=0.07)
-            modelo_iforest = iso_forest.fit(dt_train)
+            iso_forest.fit(dt_train)
             isof_outliers = iso_forest.predict(dt_train)
             isof_outliers_df = pd.DataFrame(
                 isof_outliers, columns=['Prediction'])
-
-            # isoF_outliers_values = dt_train[isof_outliers == -1]
-            # outlier_size = isoF_outliers_values.shape
 
             data = pd.concat(
                 [
                     (pd.DataFrame(dt_train)),
                     isof_outliers_df
-                ],
-                axis=1)
+                ], axis=1)
             data = data.rename(
-                columns={0: 'Artificial variable X', 1: 'Artificial variable Y'})
+                columns={
+                    0: 'Artificial variable X',
+                    1: 'Artificial variable Y'})
+
             data['Prediction'].replace(
-                {-1: 'Outlier', 1: 'No outlier'}, inplace=True)
+                {-1: 'Outlier', 1: 'No outlier'},
+                inplace=True)
         except Exception as e:
             print('outliers_iforest:', e)
             data = None
@@ -88,6 +87,7 @@ class multivariate_plot:
     # --------------------------------------------------------------------------
 
     def get_layout(self, num_samples=0):
+        """Returns the layout of the plot"""
         layout = dict(
             autosize=True,
             font={'color': '#ffffff'},
@@ -104,7 +104,7 @@ class multivariate_plot:
                 x=1,
                 bgcolor="rgba(0, 0, 0, 0)",
                 font=dict(
-                    size=8,
+                    size=10,
                 ),
             ),
             xaxis=dict(
@@ -113,7 +113,6 @@ class multivariate_plot:
                 zerolinecolor='white',
             ),
             yaxis=dict(
-                # type='log',
                 gridcolor='gray',
                 zerolinecolor='white',
             ),
@@ -128,15 +127,21 @@ class multivariate_plot:
 
     # --------------------------------------------------------------------------
 
-    # @staticmethod
     def figura(self):
         try:
-            query = f"""
+            query = """
                 SELECT
                     id, ph, materia_organica, fosforo, calcio, magnesio,
                     potasio, sodio, cice, ce, boro
-                FROM analisis
-                WHERE {self.tipo_agregado} = '{self.agregado}' """
+                 FROM
+                    analisis a INNER JOIN
+                    municipios m ON a.cod_municipio = m.cod_municipio INNER JOIN
+                    departamentos d ON m.cod_departamento = d.cod_departamento
+                """
+            if self.tipo_agregado == 'zona':
+                query += f"WHERE `{self.agregado}` = 1"
+            else:
+                query += f"WHERE m.{self.tipo_agregado} = '{self.agregado}'"
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
 
@@ -179,6 +184,7 @@ class multivariate_plot:
                 },
             ]
 
+            layout = self.get_layout(num_samples)
             fig = dict(data=datadict, layout=layout)
         except Exception as e:
             print("figure:", e)
@@ -190,6 +196,5 @@ class multivariate_plot:
         layout = dcc.Graph(
             className="mb-1",
             figure=multivariate_plot.figura(self),
-            # id="id-multivariate-plot",
         )
         return layout
