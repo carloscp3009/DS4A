@@ -37,12 +37,21 @@
   padding: 0.5rem;
   text-align: center;
 }
+#id-choropleth-map{
+  height: calc(100vh - 180px);
+  width: 100%;
+}
 #right-col{
   margin-bottom: 70px;
 }
 #right-col .card {
   margin-top: 0px !important;
   border-left: 1px solid #444444;
+}
+#id-univariate-plot,
+#id-multivariate-plot {
+  height: calc((100vh - 256px) / 2);
+  width: 100%;
 }
 .plot-separator{
   background-color: #222222;

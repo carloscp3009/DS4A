@@ -10,7 +10,7 @@ from components.central_container import central_container
 from components.footer import footer
 # from components.univariate_plot import univariate_plot
 
-import utils.map as map
+# import utils.map as map
 
 
 app = Dash(

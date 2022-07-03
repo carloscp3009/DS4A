@@ -26,7 +26,8 @@ class multivariate_plot:
 
             # Normalización de los datos
             df_region = df_region[[
-                'ph', 'materia_organica', 'fosforo', 'calcio', 'magnesio', 'potasio', 'sodio', 'cice', 'ce', 'boro'
+                'ph', 'materia_organica', 'fosforo', 'calcio', 'magnesio',
+                'potasio', 'sodio', 'cice', 'ce', 'boro'
             ]]
 
             # Data is normalized with MinMax()
@@ -92,7 +93,6 @@ class multivariate_plot:
             autosize=True,
             font={'color': '#ffffff'},
             margin=dict(l=35, r=0, t=40, b=30),
-            height=200,
             plot_bgcolor='rgba(48, 48, 48, 1)',
             paper_bgcolor='rgba(48, 48, 48, 1)',
             bgcolor='rgba(0, 0, 0, 0.5)',

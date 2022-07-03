@@ -26,7 +26,7 @@ outliers_tab_content = dbc.Card(
                 [
                     multivariable_plot.display(),
                 ],
-                id="id-mutlivariate-plot",
+                id="id-multivariate-plot",
                 className="mt-2",
             ),
         ]
