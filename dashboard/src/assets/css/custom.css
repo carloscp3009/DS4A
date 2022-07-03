@@ -14,21 +14,25 @@
   margin-left: 0;
   margin-right: 0;
 }
+
 .navbar input#select-features {
   min-width: ;
 }
+
 #central-container {
   height: calc(100vh - 140px);
   padding-top: 70px;
   max-width: 100%;
   width: 100vw;
 }
+
 #left-col {
   height: calc(100vh - 180px);
   margin-left: -0.5rem;
   max-height: calc(100vh - 140px);
   position: fixed !important;
 }
+
 #choropleth-title{
   border: 1px solid #444;
   border-bottom: none;
@@ -37,38 +41,51 @@
   padding: 0.5rem;
   text-align: center;
 }
+
 #id-choropleth-map{
   height: calc(100vh - 180px);
   width: 100%;
 }
+
 #right-col{
   height: calc(100vh - 180px);
-  margin-bottom: 70px;
-  max-height: calc(100vh - 140px);
 }
+
 #right-col .card {
   margin-top: 0px !important;
   border-left: 1px solid #444444;
+  max-height: calc(100vh - 180px);
+  overflow-x: hidden;
 }
+
 #id-univariate-plot,
 #id-multivariate-plot {
   height: calc((100vh - 256px) / 2);
   width: 100%;
 }
+
 .plot-separator{
   background-color: #222222;
   height: 0.5em;
 }
+
+#id-tabs-container .nav-item a{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 #bottom-bar {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
 }
+
 select {
   background-color: transparent !important;
   color: gray !important;
   border: solid 1px gray !important;
   background-image: url("images/chevron.svg") !important;
 }
+
 select option {
   background-color: #303030 !important;
   color: gray !important;

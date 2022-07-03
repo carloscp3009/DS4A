@@ -6,7 +6,7 @@ from dash import html
 #         [
 #             dbc.Label("pH:"),
 #             dbc.Input(id='ph-input', placeholder='pH value', type="number", min=0, max=10),
-            
+
 #             dbc.Label("Materia Organica:"),
 #             dbc.Input(id='MO-input', placeholder='MO', type="number", min=0),
 
@@ -83,9 +83,6 @@ left_col = dbc.Col(
             ],
             value='0'
             ),
-
-            
-            
         ],
         id="left-col-pred",
         className="p-3",
@@ -148,22 +145,31 @@ right_col = dbc.Col(
         className="p-3",
 )
 
-prediction_tab_content = dbc.Card([
-    dbc.Row(
+prediction_tab_content = dbc.Card(
+    dbc.CardBody(
         [
-            left_col,
-            right_col,
+            dbc.Row(
+                [
+                    dbc.Row(
+                        [
+                            left_col,
+                            right_col,
+                        ],
+                        className="w-100",
+                    ),
+                    dbc.Row(
+                        dbc.Button(
+                            "Predecir",
+                            color="primary"
+                        ),
+
+                        className="w-100",
+                    ),
+                ],
+                id="prediction-container",
+            ),
         ],
-        id="prediction-container",
-        className="g-0 ms-auto flex-nowrap row pb-2",
-        # style={"overflow": "scroll"}
     ),
-    dbc.Row(
-        dbc.Button("Predecir", color="primary"),
-        className="mb-5"
-    )
-    ],
-    className='mb-5 p-2 overflow-scroll',
-    id="prediction-card"
+    id="prediction-card",
 
 )

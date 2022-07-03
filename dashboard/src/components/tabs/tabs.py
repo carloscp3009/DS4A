@@ -10,5 +10,6 @@ tabs = dbc.Tabs(
         dbc.Tab(outliers_tab_content, label="Outliers"),
         dbc.Tab(prediction_tab_content, label="Predictions"),
         dbc.Tab(statistics_tab_content, label="Statistics"),
-    ]
+    ],
+    id="id-tabs-container",
 )
