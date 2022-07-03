@@ -1,5 +1,8 @@
 import pandas as pd
 import sqlite3
+import os
+
+from pathlib import Path
 
 # ------------------------------------------------------------------------------
 
@@ -7,7 +10,10 @@ import sqlite3
 class Connection():
     @staticmethod
     def get_connection():
-        conn = sqlite3.connect('data/database.db')
+
+        ruta = Path(__file__).parent.absolute()
+        ruta = os.path.join(ruta.parent, "data", "database.db")
+        conn = sqlite3.connect(ruta)
         cur = conn.cursor()
         return conn, cur
 

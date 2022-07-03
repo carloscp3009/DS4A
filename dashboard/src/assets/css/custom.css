@@ -24,10 +24,18 @@
   width: 100vw;
 }
 #left-col {
-  height: calc(100vh - 140px);
+  height: calc(100vh - 180px);
   margin-left: -0.5rem;
   max-height: calc(100vh - 140px);
   position: fixed !important;
+}
+#choropleth-title{
+  border: 1px solid #444;
+  border-bottom: none;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.5rem;
+  text-align: center;
 }
 #right-col{
   margin-bottom: 70px;

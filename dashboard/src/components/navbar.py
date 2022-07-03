@@ -6,9 +6,11 @@ from utils.load_data import (
     lstDepartamentos,
     lstZonas,
     lstPlots,
-
     Connection)
 from components.tabs.outliers import variable_plot, multivariable_plot
+from components.central_container import my_choropleth_map
+from utils.map import map
+import pandas as pd
 # (
     # acidez_plot,
     # aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot
@@ -174,7 +176,8 @@ def update_municipalities(departamento):
 @callback(
     [
         Output("id-univariate-plot", "children"),
-        Output("id-mutlivariate-plot", "children")
+        Output("id-mutlivariate-plot", "children"),
+        Output("id-choropleth-map", "children")
     ],
     [
         State('select-zone', 'value'),
@@ -222,9 +225,23 @@ def update_outliers_plot(
 
         nuevo_grafico_multivariate = multivariable_plot.display()
 
+        # Choropleth
+        if feature:
+            my_choropleth_map.variable = feature
+        else:
+            my_choropleth_map.variable = 'acidez'
+
+        nuevo_choropleth = my_choropleth_map.display()
+
+        # AGROSAVIA_df[feature] = AGROSAVIA_df[feature].astype(float)
+        # col = feature
+        # data_req = AGROSAVIA_df.groupby("MUN_ID")[col].mean().to_frame()
+        # data_req["Nombre"] = DANE_df.Municipio
+        # data_req.reset_index(inplace=True)
+
     except Exception as e:
         print("update_outliers_plot:", e)
-    return [nuevo_grafico, nuevo_grafico_multivariate]
+    return [nuevo_grafico, nuevo_grafico_multivariate, nuevo_choropleth]
 
 # ------------------------------------------------------------------------------
 

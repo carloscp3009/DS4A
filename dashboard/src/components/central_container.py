@@ -1,21 +1,25 @@
 import dash_bootstrap_components as dbc
+from dash import dcc, html
+from components.choropleth_plot import choropleth_plot
+from utils.map import map
 from components.tabs import tabs
 
 # ------------------------------------------------------------------------------
 
+my_choropleth_map = choropleth_plot()
 left_col = dbc.Col(
         [
+            html.Div(
+                "Materia organica",
+                id="choropleth-title",
+            ),
             dbc.Container(
-                # dcc.Graph(
-                #     id='map',
-                #     figure=map,
-                #     className="mt-2 h-100 mb-2",
-                # ),
-                # className="mt-2 h-100 mb-2",
+                my_choropleth_map.display(),
+                id="id-choropleth-map",
             ),
         ],
         id="left-col",
-        className="col-12 col-md-8 px-2",
+        className="col-12 col-md-8 px-2 mt-2",
     )
 
 # ------------------------------------------------------------------------------
