@@ -38,7 +38,9 @@
   text-align: center;
 }
 #right-col{
+  height: calc(100vh - 180px);
   margin-bottom: 70px;
+  max-height: calc(100vh - 140px);
 }
 #right-col .card {
   margin-top: 0px !important;
