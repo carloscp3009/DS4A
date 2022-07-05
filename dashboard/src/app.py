@@ -1,17 +1,13 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
-from dash import Dash, Input, Output, State, dcc
+from dash import Dash, Input, Output, State
 import dash_bootstrap_components as dbc
-import pandas as pd
-
 from components.navbar import navbar
 from components.central_container import central_container
 from components.footer import footer
-# from components.univariate_plot import univariate_plot
 
-# import utils.map as map
-
+# ------------------------------------------------------------------------------
 
 app = Dash(
     __name__,
@@ -45,10 +41,9 @@ def toggle_navbar_collapse(n, is_open):
         return not is_open
     return is_open
 
-# map.register_callback(app)
 
 # ------------------------------------------------------------------------------
 # Run the Dash app
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, host='0.0.0.0')

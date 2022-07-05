@@ -74,6 +74,7 @@ class choropleth_plot:
                 ),
             )
             fig.layout.coloraxis.colorbar.title = ''
+            fig.update_coloraxes(colorbar_tickfont_color='#ffffff')
 
         except Exception as e:
             print("figure:", e)
