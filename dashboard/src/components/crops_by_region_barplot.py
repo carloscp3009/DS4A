@@ -52,7 +52,8 @@ class Crops_by_region_barplot:
                     {field} as {fieldname}, count(*) as Cantidad
                 FROM
                     analisis a INNER JOIN
-                    municipios m ON a.cod_municipio = m.cod_municipio INNER JOIN
+                    municipios m ON a.cod_municipio = m.cod_municipio
+                                                                    INNER JOIN
                     departamentos d ON m.cod_departamento = d.cod_departamento
                 {extra}
                 GROUP BY {fieldname}

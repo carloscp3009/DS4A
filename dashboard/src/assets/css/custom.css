@@ -52,10 +52,6 @@
   margin-right: 0;
 }
 
-.navbar input#select-features {
-  min-width: ;
-}
-
 #central-container {
   height: calc(100vh - 140px);
   padding-top: 70px;

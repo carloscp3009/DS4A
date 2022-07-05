@@ -1,6 +1,4 @@
-import dash
 import dash_bootstrap_components as dbc
-import pandas as pd
 
 from dash import html, Input, Output, State, callback
 
@@ -69,6 +67,7 @@ filters_bar = dbc.Row(
     className="g-0 ms-auto flex-nowrap mt-3 mt-md-0 pe-4",
     align="center")
 
+ruta_logo = 'assets/logos/logo-agrosavia-transparent.png'
 navbar = dbc.Navbar(
     dbc.Container(
         [
@@ -77,7 +76,7 @@ navbar = dbc.Navbar(
                     [
                         dbc.Col(
                             html.Img(
-                                src='assets/logos/logo-agrosavia-transparent.png',
+                                src=ruta_logo,
                                 height="30px")),
                         # dbc.Col(dbc.NavbarBrand("Navbar", className="ms-2")),
                     ], align="center", className="g-0",
@@ -160,12 +159,14 @@ def update_municipalities(departamento):
                 WHERE cod_departamento = '%s'
                 ORDER BY municipio''' % departamento
             data = Connection.get_data(query)
-            lstMunicipios = [{"label": row[1], "value": row[0]} for row in data]
+            lstMunicipios = [
+                {"label": row[1], "value": row[0]} for row in data]
     except Exception as e:
         print("update_municipalities:", e)
     return ["", lstMunicipios]
 
 # ------------------------------------------------------------------------------
+
 
 @callback(
     [

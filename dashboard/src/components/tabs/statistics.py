@@ -1,5 +1,4 @@
 import dash_bootstrap_components as dbc
-from dash import html
 from components.crops_by_region_barplot import Crops_by_region_barplot
 from components.crops_types_by_region_barplot import (
     Crops_types_by_region_barplot)

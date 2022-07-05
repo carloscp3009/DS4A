@@ -1,12 +1,8 @@
 import os
 import json
-from tkinter import Variable
-from matplotlib.pyplot import colorbar
 import plotly.express as px
 import pandas as pd
-import plotly.io as pio
 from pathlib import Path
-from dash import Input, Output, State
 from dash import dcc
 
 from utils.load_data import Connection
@@ -62,7 +58,8 @@ class choropleth_plot:
                 zoom=4.5,
                 mapbox_style="carto-positron",
                 opacity=0.4,
-                range_color=self.datos[self.label].quantile([0, 0.98]).tolist(),
+                range_color=self.datos[self.label].quantile(
+                    [0, 0.98]).tolist(),
             )
 
             fig.update_layout(paper_bgcolor='#303030', plot_bgcolor='#303030')

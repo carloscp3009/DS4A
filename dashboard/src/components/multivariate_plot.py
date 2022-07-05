@@ -136,7 +136,8 @@ class multivariate_plot:
                     potasio, sodio, cice, ce, boro
                  FROM
                     analisis a INNER JOIN
-                    municipios m ON a.cod_municipio = m.cod_municipio INNER JOIN
+                    municipios m ON a.cod_municipio = m.cod_municipio
+                                                                    INNER JOIN
                     departamentos d ON m.cod_departamento = d.cod_departamento
                 """
             if self.tipo_agregado == 'zona':
@@ -170,8 +171,10 @@ class multivariate_plot:
 
             datadict = [
                 {
-                    'x': df_outliers[no_outliers_mask]['Artificial variable X'],
-                    'y': df_outliers[no_outliers_mask]['Artificial variable Y'],
+                    'x':
+                        df_outliers[no_outliers_mask]['Artificial variable X'],
+                    'y':
+                        df_outliers[no_outliers_mask]['Artificial variable Y'],
                     'type': 'scatter',
                     'mode': 'markers',
                     'name': f'Normal ({num_no_outliers})',
