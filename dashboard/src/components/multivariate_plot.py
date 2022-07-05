@@ -22,7 +22,8 @@ class multivariate_plot:
 
     def outliers_iforest(self):
         try:
-            df_region = self.datos.copy()
+            # df_region = self.datos.copy()
+            df_region = self.datos
 
             # Normalización de los datos
             df_region = df_region[[
@@ -117,7 +118,7 @@ class multivariate_plot:
                 zerolinecolor='white',
             ),
             title={
-                'text': f"{self.label} ({num_samples})",
+                'text': f"Número de muestras {num_samples} (Max. 5000)",
                 'x': 0.5,
                 'y': 0.95,
                 'font': {'size': 12},
@@ -142,8 +143,12 @@ class multivariate_plot:
                 query += f"WHERE `{self.agregado}` = 1"
             else:
                 query += f"WHERE m.{self.tipo_agregado} = '{self.agregado}'"
+
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
+
+            if self.datos.shape[0] > 5000:
+                self.datos = self.datos.sample(5000)
 
             null_values = self.datos[self.datos.isnull().any(1)]
             self.datos = \

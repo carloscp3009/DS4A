@@ -1,3 +1,40 @@
+/*******************************************************************************
+ * Loeading
+ ******************************************************************************/
+*[data-dash-is-loading="true"]{
+  visibility: hidden;
+}
+
+*[data-dash-is-loading="true"]::before{
+  content: "Loading...";
+  display: inline-block;
+  color: rgb(255, 255, 255);
+  visibility: visible;
+  text-align: center;
+}
+
+/*******************************************************************************
+ * Scrollbar
+ ******************************************************************************//* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #303030;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 #main-container {
   height: 100vh;
   max-width: 100%;
@@ -60,7 +97,13 @@
 
 #id-univariate-plot,
 #id-multivariate-plot {
-  height: calc((100vh - 256px) / 2);
+  height: calc((100vh - 280px) / 2);
+  width: 100%;
+}
+
+#id-crops-by-region-barplot div.dash-graph,
+#id-crops-types-by-region-barplot div.dash-graph {
+  height: calc((100vh - 216px) / 2);
   width: 100%;
 }
 

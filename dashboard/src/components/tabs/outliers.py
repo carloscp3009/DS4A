@@ -11,7 +11,7 @@ outliers_tab_content = dbc.Card(
         [
             html.Div(
                 "Análisis univariado de outliers",
-                className="card-text mb-0 text-center"),
+                className="mb-0 text-center"),
             dbc.Row(
                 [
                     variable_plot.display(),
@@ -22,12 +22,14 @@ outliers_tab_content = dbc.Card(
                 [],
                 className="plot-separator",
             ),
+            html.Div(
+                "Análisis multivariado de outliers",
+                className="mt-2 mb-0 text-center"),
             dbc.Row(
                 [
                     multivariable_plot.display(),
                 ],
                 id="id-multivariate-plot",
-                className="mt-2",
             ),
         ]
     ),

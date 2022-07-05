@@ -1,20 +1,14 @@
-from dash import html, Input, Output, State, callback
 import dash
 import dash_bootstrap_components as dbc
-from utils.load_data import (
-    lstVariables,
-    lstDepartamentos,
-    lstZonas,
-    lstPlots,
-    Connection)
+import pandas as pd
+
+from dash import html, Input, Output, State, callback
+
 from components.tabs.outliers import variable_plot, multivariable_plot
 from components.central_container import my_choropleth_map
-# from utils.map import map
-import pandas as pd
-# (
-    # acidez_plot,
-    # aluminio_plot, azufre_plot, boro_plot, calcio_plot, ce_plot, cice_plot, cobre_plot, cobre_doble_acido_plot, fosforo_plot, hierro_doble_acido_plot, hierro_olsen_plot, magnesio_plot, manganeso_plot, manganeso_doble_acido_plot, materia_organica_plot, ph_plot, potasio_plot, sodio_plot, zinc_olsen_plot
-    # )
+from components.tabs.statistics import crops_by_region, crops_types_by_region
+from utils.load_data import (
+    lstVariables, lstDepartamentos, lstZonas, Connection)
 
 # ------------------------------------------------------------------------------
 
@@ -116,9 +110,9 @@ def update_deparments(zona):
         if zona:
             query = f'''
                 SELECT
-	                cod_departamento, departamento
+                    cod_departamento, departamento
                 FROM
-	                departamentos
+                    departamentos
                 WHERE `{zona}` = 1
                 ORDER BY departamento'''
         else:
@@ -178,7 +172,9 @@ def update_municipalities(departamento):
         Output("id-univariate-plot", "children"),
         Output("id-multivariate-plot", "children"),
         Output("id-choropleth-map", "children"),
-        Output("choropleth-title", "children")
+        Output("choropleth-title", "children"),
+        Output("id-crops-by-region-barplot", "children"),
+        Output("id-crops-types-by-region-barplot", "children"),
     ],
     [
         State('select-zone', 'value'),
@@ -189,8 +185,7 @@ def update_municipalities(departamento):
     [Input('btnFiltrar', 'n_clicks')],
     prevent_initial_call=True
 )
-def update_outliers_plot(
-                    zona, departamento, municipio, feature, n_clicks):
+def update_plots(zona, departamento, municipio, feature, n_clicks):
     if feature:
         variable = feature
         for item in lstVariables:
@@ -238,11 +233,22 @@ def update_outliers_plot(
         my_choropleth_map.label = feature_label
 
         nuevo_choropleth = my_choropleth_map.display()
+
+        # Gráfico de cultivo por región
+        crops_by_region.tipo_agregado = tipo_agregado
+        crops_by_region.agregado = agregado
+        new_crops_by_region = crops_by_region.display()
+
+        # Gráfico de tipo cultivo por región
+        crops_types_by_region.tipo_agregado = tipo_agregado
+        crops_types_by_region.agregado = agregado
+        new_crops_types_by_region = crops_types_by_region.display()
+
     except Exception as e:
         print("update_outliers_plot:", e)
     return [
-        nuevo_grafico, nuevo_grafico_multivariate,
-        nuevo_choropleth, feature_label]
+        nuevo_grafico, nuevo_grafico_multivariate, nuevo_choropleth,
+        feature_label, new_crops_by_region, new_crops_types_by_region]
 
 # ------------------------------------------------------------------------------
 
