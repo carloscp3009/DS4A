@@ -73,6 +73,7 @@ class multivariate_plot:
                     (pd.DataFrame(dt_train)),
                     isof_outliers_df
                 ], axis=1)
+
             data = data.rename(
                 columns={
                     0: 'Artificial variable X',
@@ -161,13 +162,15 @@ class multivariate_plot:
                 return fig
 
             df_outliers = self.outliers_iforest()
-
             outliers_mask = df_outliers['Prediction'] == 'Outlier'
             no_outliers_mask = df_outliers['Prediction'] == 'No outlier'
 
             num_samples = self.datos.shape[0]
             num_outliers = df_outliers[outliers_mask].shape[0]
             num_no_outliers = df_outliers[no_outliers_mask].shape[0]
+
+            if 'Artificial variable Y' not in df_outliers.columns:
+                df_outliers['Artificial variable Y'] = 0
 
             datadict = [
                 {
@@ -179,7 +182,7 @@ class multivariate_plot:
                     'mode': 'markers',
                     'name': f'Normal ({num_no_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
-                    'marker': {"size": "3", "color": "#2196f3"},
+                    'marker': {"size": "5", "color": "#2196f3"},
                 },
                 {
                     'x': df_outliers[outliers_mask]['Artificial variable X'],
@@ -188,7 +191,7 @@ class multivariate_plot:
                     'mode': 'markers',
                     'name': f'Outliers ({num_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
-                    'marker': {"size": "3", "color": "#ffeb3b"},
+                    'marker': {"size": "5", "color": "#ffeb3b"},
                 },
             ]
 

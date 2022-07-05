@@ -26,7 +26,7 @@ class Crops_types_by_region_barplot:
                 """
                 _zona = Connection.get_data(query)[0][0]
                 self.title = 'Cantidad de cultivos en zona ' + _zona
-                extra = f'AND d.`{self.agregado}` = 1'
+                extra = f'WHERE d.`{self.agregado}` = 1'
 
             elif self.tipo_agregado == 'cod_departamento':
                 query = f"""
@@ -36,7 +36,7 @@ class Crops_types_by_region_barplot:
                 """
                 _departamento = Connection.get_data(query)[0][0]
                 self.title = f"Principales cultivos en {_departamento}"
-                extra = f"AND d.cod_departamento = '{self.agregado}'"
+                extra = f"WHERE d.cod_departamento = '{self.agregado}'"
 
             elif self.tipo_agregado == 'cod_municipio':
                 query = f"""
@@ -46,7 +46,7 @@ class Crops_types_by_region_barplot:
                 """
                 _municipio = Connection.get_data(query)[0][0]
                 self.title = f"Principales cultivos en {_municipio}"
-                extra = f"AND m.cod_municipio = '{self.agregado}'"
+                extra = f"WHERE m.cod_municipio = '{self.agregado}'"
 
             else:
                 self.tipo_agregado = 'departamento'
@@ -59,8 +59,7 @@ class Crops_types_by_region_barplot:
                     municipios m ON a.cod_municipio = m.cod_municipio
                                                                     INNER JOIN
                     departamentos d ON m.cod_departamento = d.cod_departamento
-                WHERE
-                    Cultivos != 'no indica' {extra}
+                {extra}
                 GROUP BY Cultivos
                 ORDER BY Cantidad DESC
                 LIMIT 10

@@ -42,6 +42,21 @@ class Crops_by_region_barplot:
                 fieldname = 'Municipios'
                 extra = f"WHERE d.cod_departamento = '{self.agregado}'"
 
+            elif self.tipo_agregado == 'cod_municipio':
+                query = f"""
+                    SELECT d.cod_departamento, d.departamento
+                    FROM
+                        municipios m INNER JOIN
+                        departamentos d ON m.cod_departamento = d.cod_departamento
+                    WHERE m.cod_municipio = '{self.agregado}'
+                """
+                _cod_departamento = Connection.get_data(query)[0][0]
+                _departamento = Connection.get_data(query)[0][1]
+                self.title = f"Cultivos en {_departamento} por municipio"
+                field = 'm.municipio'
+                fieldname = 'Municipios'
+                extra = f"WHERE d.cod_departamento = '{_cod_departamento}'"
+
             else:
                 self.title = 'Cantidad de cultivos por departamento'
                 field = 'd.departamento'

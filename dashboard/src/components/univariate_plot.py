@@ -113,7 +113,7 @@ class univariate_plot:
                     'name': f'Normal ({num_no_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
                     'hoverinfo': 'skip',
-                    'marker': {"size": "3", "color": "#2196f3"},
+                    'marker': {"size": "5", "color": "#2196f3"},
                 },
                 {
                     'x': self.datos[filtro_2]['variable'],
@@ -123,7 +123,7 @@ class univariate_plot:
                     'name': f'Outlier ({num_outliers})',
                     'hovertemplate':'Muestra: %{y:.0f}<br>Valor %{x}',
                     'hoverinfo': 'skip',
-                    'marker': {"size": "3", "color": "#ffeb3b"},
+                    'marker': {"size": "5", "color": "#ffeb3b"},
                 },
             ]
 
