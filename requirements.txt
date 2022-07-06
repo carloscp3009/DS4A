@@ -4,4 +4,4 @@ dash-auth
 pandas
 numpy
 tensorflow
-
+xgboost
