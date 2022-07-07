@@ -119,7 +119,7 @@ class multivariate_plot:
                 zerolinecolor='white',
             ),
             title={
-                'text': f"Número de muestras {num_samples} (Max. 5000)",
+                'text': f"Total samples {num_samples} (Max. 5000)",
                 'x': 0.5,
                 'y': 0.95,
                 'font': {'size': 12},

@@ -12,7 +12,7 @@ class Crops_types_by_region_barplot:
     def __init__(self, tipo_agregado=None, agregado=None):
         self.agregado = agregado
         self.tipo_agregado = tipo_agregado
-        self.title = 'Principales cultivos a nivel nacional'
+        self.title = 'Main crops in Colombia'
 
     # --------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ class Crops_types_by_region_barplot:
                     WHERE cod_region = '{self.agregado}'
                 """
                 _zona = Connection.get_data(query)[0][0]
-                self.title = 'Cantidad de cultivos en zona ' + _zona
+                self.title = 'Main crops in ' + _zona + ' zone'
                 extra = f'WHERE d.`{self.agregado}` = 1'
 
             elif self.tipo_agregado == 'cod_departamento':
@@ -35,7 +35,7 @@ class Crops_types_by_region_barplot:
                     WHERE cod_departamento = '{self.agregado}'
                 """
                 _departamento = Connection.get_data(query)[0][0]
-                self.title = f"Principales cultivos en {_departamento}"
+                self.title = f"Main crops in {_departamento}"
                 extra = f"WHERE d.cod_departamento = '{self.agregado}'"
 
             elif self.tipo_agregado == 'cod_municipio':
@@ -45,7 +45,7 @@ class Crops_types_by_region_barplot:
                     WHERE cod_municipio = '{self.agregado}'
                 """
                 _municipio = Connection.get_data(query)[0][0]
-                self.title = f"Principales cultivos en {_municipio}"
+                self.title = f"Main crops in {_municipio}"
                 extra = f"WHERE m.cod_municipio = '{self.agregado}'"
 
             else:
@@ -53,25 +53,25 @@ class Crops_types_by_region_barplot:
                 extra = ''
             query = f"""
                 SELECT
-                    a.cultivo as Cultivos, count(*) as Cantidad
+                    a.cultivo as Crops, count(*) as Quantity
                 FROM
                     analisis a INNER JOIN
                     municipios m ON a.cod_municipio = m.cod_municipio
                                                                     INNER JOIN
                     departamentos d ON m.cod_departamento = d.cod_departamento
                 {extra}
-                GROUP BY Cultivos
-                ORDER BY Cantidad DESC
+                GROUP BY Crops
+                ORDER BY Quantity DESC
                 LIMIT 10
                 """
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
-            self.datos['Cultivos'] = self.datos['Cultivos'].str.title()
+            self.datos['Crops'] = self.datos['Crops'].str.title()
 
             fig = px.bar(
-                self.datos, x='Cantidad', y='Cultivos',
-                hover_data=['Cultivos', 'Cantidad'],
-                color='Cantidad',
+                self.datos, x='Quantity', y='Crops',
+                hover_data=['Crops', 'Quantity'],
+                color='Quantity',
                 text_auto=True,
                 orientation='h',
                 title=self.title,

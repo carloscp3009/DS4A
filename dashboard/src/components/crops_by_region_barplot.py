@@ -25,9 +25,9 @@ class Crops_by_region_barplot:
                     WHERE cod_region = '{self.agregado}'
                 """
                 _zona = Connection.get_data(query)[0][0]
-                self.title = 'Cantidad de cultivos en zona ' + _zona
+                self.title = 'Crops in ' + _zona + ' zone'
                 field = 'd.departamento'
-                fieldname = 'Departamentos'
+                fieldname = 'Deparments'
                 extra = f'WHERE d.`{self.agregado}` = 1'
 
             elif self.tipo_agregado == 'cod_departamento':
@@ -37,9 +37,9 @@ class Crops_by_region_barplot:
                     WHERE cod_departamento = '{self.agregado}'
                 """
                 _departamento = Connection.get_data(query)[0][0]
-                self.title = f"Cultivos en {_departamento} por municipio"
+                self.title = f"Crops in {_departamento} per municipality"
                 field = 'm.municipio'
-                fieldname = 'Municipios'
+                fieldname = 'Municipalities'
                 extra = f"WHERE d.cod_departamento = '{self.agregado}'"
 
             elif self.tipo_agregado == 'cod_municipio':
@@ -47,24 +47,25 @@ class Crops_by_region_barplot:
                     SELECT d.cod_departamento, d.departamento
                     FROM
                         municipios m INNER JOIN
-                        departamentos d ON m.cod_departamento = d.cod_departamento
+                        departamentos d
+                                    ON m.cod_departamento = d.cod_departamento
                     WHERE m.cod_municipio = '{self.agregado}'
                 """
                 _cod_departamento = Connection.get_data(query)[0][0]
                 _departamento = Connection.get_data(query)[0][1]
-                self.title = f"Cultivos en {_departamento} por municipio"
+                self.title = f"Crops in {_departamento} per municipality"
                 field = 'm.municipio'
-                fieldname = 'Municipios'
+                fieldname = 'Municipalities'
                 extra = f"WHERE d.cod_departamento = '{_cod_departamento}'"
 
             else:
-                self.title = 'Cantidad de cultivos por departamento'
+                self.title = 'Crops by deparment'
                 field = 'd.departamento'
-                fieldname = 'Departamentos'
+                fieldname = 'Deparments'
                 extra = ''
             query = f"""
                 SELECT
-                    {field} as {fieldname}, count(*) as Cantidad
+                    {field} as {fieldname}, count(*) as Quantity
                 FROM
                     analisis a INNER JOIN
                     municipios m ON a.cod_municipio = m.cod_municipio
@@ -72,16 +73,16 @@ class Crops_by_region_barplot:
                     departamentos d ON m.cod_departamento = d.cod_departamento
                 {extra}
                 GROUP BY {fieldname}
-                ORDER BY Cantidad DESC
+                ORDER BY Quantity DESC
                 LIMIT 10
                 """
             conn, cur = Connection.get_connection()
             self.datos = pd.read_sql_query(query, conn)
 
             fig = px.bar(
-                self.datos, x='Cantidad', y=fieldname,
-                hover_data=[fieldname, 'Cantidad'],
-                color='Cantidad',
+                self.datos, x='Quantity', y=fieldname,
+                hover_data=[fieldname, 'Quantity'],
+                color='Quantity',
                 text_auto=True,
                 orientation='h',
                 title=self.title,

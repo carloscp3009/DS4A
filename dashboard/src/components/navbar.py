@@ -16,7 +16,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-zone",
                 options=lstZonas,
-                placeholder='Zona'
+                placeholder='Zone'
             ),
             className="ps-2"
         ),
@@ -24,7 +24,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-deparment",
                 options=lstDepartamentos,
-                placeholder='Departamento'
+                placeholder='Deparment'
             ),
             className="ps-2"
         ),
@@ -32,7 +32,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-municipality",
                 options=[],
-                placeholder='Municipio'
+                placeholder='Municipality'
             ),
             className="ps-2"
         ),
@@ -40,7 +40,7 @@ filters_bar = dbc.Row(
             dbc.Select(
                 id="select-feature",
                 options=lstVariables,
-                placeholder='Variable'
+                placeholder='Feature'
             ),
             className="ps-2"
         ),
@@ -78,7 +78,6 @@ navbar = dbc.Navbar(
                             html.Img(
                                 src=ruta_logo,
                                 height="30px")),
-                        # dbc.Col(dbc.NavbarBrand("Navbar", className="ms-2")),
                     ], align="center", className="g-0",
                 ),
                 style={"textDecoration": "none"},
@@ -211,7 +210,6 @@ def update_plots(zona, departamento, municipio, feature, n_clicks):
             tipo_agregado = 'zona'
         else:
             tipo_agregado = "cod_municipio"
-            # return [dash.no_update, dash.no_update]
 
         # Grafico de univariado de outliers
         variable_plot.agregado = agregado

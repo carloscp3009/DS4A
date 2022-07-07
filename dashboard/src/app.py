@@ -19,6 +19,8 @@ app = Dash(
     __name__,
     external_stylesheets=[
         dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
+app.title = "Dashboard | Agrosavia"
+app._favicon = "favicon.png"
 
 auth = dash_auth.BasicAuth(
     app,
@@ -56,4 +58,4 @@ def toggle_navbar_collapse(n, is_open):
 # Run the Dash app
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0')
+    app.run_server(debug=False, host='0.0.0.0')

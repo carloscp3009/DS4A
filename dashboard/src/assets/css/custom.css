@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Loeading
  ******************************************************************************/
-*[data-dash-is-loading="true"]{
+*[data-dash-is-loading="true"] {
   visibility: hidden;
 }
 
-*[data-dash-is-loading="true"]::before{
+*[data-dash-is-loading="true"]::before {
   content: "Loading...";
   display: inline-block;
   color: rgb(255, 255, 255);
@@ -15,7 +15,7 @@
 
 /*******************************************************************************
  * Scrollbar
- ******************************************************************************//* width */
+ ******************************************************************************/ /* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -66,7 +66,7 @@
   position: fixed !important;
 }
 
-#choropleth-title{
+#choropleth-title {
   border: 1px solid #444;
   border-bottom: none;
   border-top-left-radius: 0.25rem;
@@ -75,12 +75,12 @@
   text-align: center;
 }
 
-#id-choropleth-map{
+#id-choropleth-map {
   height: calc(100vh - 180px);
   width: 100%;
 }
 
-#right-col{
+#right-col {
   height: calc(100vh - 180px);
 }
 
@@ -103,14 +103,18 @@
   width: 100%;
 }
 
-.plot-separator{
+.plot-separator {
   background-color: #222222;
   height: 0.5em;
 }
 
-#id-tabs-container .nav-item a{
+#id-tabs-container .nav-item a {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+#prediction-container label{
+  white-space: nowrap;
 }
 
 #bottom-bar {
@@ -124,17 +128,19 @@ select {
   border: solid 1px gray !important;
   background-image: url("images/chevron.svg") !important;
 }
+
+select option {
+  background-color: #303030 !important;
+  color: gray !important;
+}
+
 input {
   background-color: transparent !important;
   color: gray !important;
   border: solid 1px gray !important;
   background-image: url("images/chevron.svg") !important;
 }
-select option {
-  background-color: #303030 !important;
-  color: gray !important;
-}
 
-#id_zinc_olsen_plot{
-    padding-bottom: 60px !important;
+#id_zinc_olsen_plot {
+  padding-bottom: 60px !important;
 }

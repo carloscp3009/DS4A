@@ -10,7 +10,7 @@ outliers_tab_content = dbc.Card(
     dbc.CardBody(
         [
             html.Div(
-                "Análisis univariado de outliers",
+                "Univariate analysis of outliers",
                 className="mb-0 text-center"),
             dbc.Row(
                 [
@@ -23,7 +23,7 @@ outliers_tab_content = dbc.Card(
                 className="plot-separator",
             ),
             html.Div(
-                "Análisis multivariado de outliers",
+                "Multivariate analysis of outliers",
                 className="mt-2 mb-0 text-center"),
             dbc.Row(
                 [
