@@ -6,14 +6,24 @@ import dash_bootstrap_components as dbc
 from components.navbar import navbar
 from components.central_container import central_container
 from components.footer import footer
+import dash_auth
 
 # ------------------------------------------------------------------------------
+USERNAME_PASSWORD_PAIRS = {
+    'agrosavia': 'team50',
+    'correlationone': 'team50',
+    'ds4a': 'team50'
+}
 
 app = Dash(
     __name__,
     external_stylesheets=[
         dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
 
+auth = dash_auth.BasicAuth(
+    app,
+    USERNAME_PASSWORD_PAIRS
+)
 # ------------------------------------------------------------------------------
 # App layout
 # ------------------------------------------------------------------------------
