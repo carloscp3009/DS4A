@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 import joblib
 import xgboost
+import operator
+
 
 # prediction_tab_content = dbc.Card(
 #     dbc.CardBody(
@@ -189,7 +191,7 @@ prediction_tab_content = dbc.Card(
                             n_clicks=0
                         ),
                         html.Br(),
-                        html.P(id="prediction-result", className="p-1 text-center"),
+                        html.P(id="prediction-result", className="p-1 text-center mt-2"),
                     ],
                         className="w-100",
                     ),
@@ -299,8 +301,32 @@ def predict(ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio,
     
 
     predicted_crop = xgboost.predict(new_sample)
+    probabilidades = xgboost.predict_proba(new_sample)
+    cont=0
+    val={}
+    for prob in probabilidades[0]:
+        val[crops[cont]]=prob
+        cont=cont+1
+    sortedDict = sorted(val.items(), key=operator.itemgetter(1))
+    cultivos=[]
+    cultivos.append(sortedDict[15:20][4][0])
+    cultivos.append(sortedDict[15:20][3][0])
+    cultivos.append(sortedDict[15:20][2][0])
+    cultivos.append(sortedDict[15:20][1][0])
+    cultivos.append(sortedDict[15:20][0][0])
+    # print(probabilidades)
+    # print(cultivos)
+    cadena = [html.H5("Top Cultivo Sugeridos :"), 
+            "1. ", cultivos[0],html.Br(), 
+            "2. ", cultivos[1],html.Br(), 
+            "3. ", cultivos[2],html.Br(), 
+            "4. ", cultivos[3],html.Br(), 
+            "5. ", cultivos[4]
+            ] 
+    print(cadena)
+    return [cadena]
 
-    return [f"Cultivo Sugerido : {crops[predicted_crop[0]]}"]
+    # return [f"Cultivo Sugerido : {crops[predicted_crop[0]]}"]
 # (ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio, ce, hierro_olsen, cobre, manganeso, zinc_olsen, boro, estado_select, tiempo, topografia, drenaje, riego, geo)
 
 # ------------------------------------------------------------------------------
