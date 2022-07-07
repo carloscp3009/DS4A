@@ -1,4 +1,3 @@
-from pydoc import classname
 import dash_bootstrap_components as dbc
 import joblib
 import numpy as np
@@ -308,6 +307,18 @@ def predict(
         ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio,
         ce, hierro_olsen, cobre, manganeso, zinc_olsen, boro, estado_select,
         tiempo, topografia, drenaje, riego, dpto, mun, clicks):
+    """Predict the recommended crops to grow based on the inputs.
+
+    Inputs:
+        ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio,
+        ce, hierro_olsen, cobre, manganeso, zinc_olsen, boro, estado_select,
+        tiempo, topografia, drenaje, riego, deparment, municipality
+
+    Outputs:
+        prediction-result: A list of the recommended crops to grow.
+
+    Version: 1.0 - Initial version
+    """
     if ((estado_select == '0') or (tiempo == '0') or (topografia == '0') or
             (drenaje == '0') or (riego == '0') or (dpto is None) or
             (mun == "")):
@@ -376,6 +387,17 @@ def predict(
     [Input('dpto-select', 'value')],
     prevent_initial_call=True)
 def update_municipalities(departamento):
+    """Update the municipalities select options.
+
+    Inputs:
+        departamento: The selected department.
+
+    Outputs:
+        mun-select: The updated municipalities select value.
+        mun-select: The updated municipalities select options.
+
+    Version: 1.0 - Initial version
+    """
     lstMunicipios = []
     try:
         if departamento:

@@ -10,6 +10,19 @@ from utils.load_data import Connection
 
 class Crops_by_region_barplot:
     def __init__(self, tipo_agregado=None, agregado=None):
+        """ Initializes the class
+
+        Inputs:
+            tipo_agregado: string
+                'zona' or 'cod_departamento' or 'cod_municipio'
+            agregado: string
+                'zona' or 'cod_departamento' or 'cod_municipio'
+
+        Outputs:
+            None
+
+        Version: 1.0 - Initial version
+        """
         self.agregado = agregado
         self.tipo_agregado = tipo_agregado
         self.title = ' '
@@ -17,6 +30,16 @@ class Crops_by_region_barplot:
     # --------------------------------------------------------------------------
 
     def figura(self):
+        """Create a crops bar plot of the given region.
+
+        Inputs:
+            None
+
+        Outputs:
+            figura: dict
+                Layout of the crops bar plot.
+
+        Version: 1.0 - Initial version """
         try:
             if self.tipo_agregado == 'zona':
                 query = f"""
@@ -112,7 +135,16 @@ class Crops_by_region_barplot:
     # --------------------------------------------------------------------------
 
     def display(self):
-        """Displays the card with label, kpi and a mini-plot from the data"""
+        """Return the crops bar plot.
+
+        Inputs:
+            None
+
+        Outputs:
+            layout: dict
+                Layout of the crops bar plot.
+
+        Version: 1.0 - Initial version """
         layout = dcc.Graph(
             className="mb-1",
             figure=Crops_by_region_barplot.figura(self),

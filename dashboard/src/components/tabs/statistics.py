@@ -1,7 +1,10 @@
 import dash_bootstrap_components as dbc
+
 from components.crops_by_region_barplot import Crops_by_region_barplot
 from components.crops_types_by_region_barplot import (
     Crops_types_by_region_barplot)
+
+# ------------------------------------------------------------------------------
 
 crops_by_region = Crops_by_region_barplot()
 crops_types_by_region = Crops_types_by_region_barplot()

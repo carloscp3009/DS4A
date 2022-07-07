@@ -104,6 +104,19 @@ navbar = dbc.Navbar(
     [Input('select-zone', 'value')],
     prevent_initial_call=True)
 def update_deparments(zona):
+    """Update deparments based on zone selected.
+
+    Input:
+        zona: str
+            Zone selected.
+
+    Output:
+        value: str
+            Empty string as Deparment selected.
+        options: list
+            List of deparments.
+
+    version: 1.0 - Initial version. """
     try:
         if zona:
             query = f'''
@@ -136,6 +149,21 @@ def update_deparments(zona):
     [Input('btnReset', 'n_clicks')],
     prevent_initial_call=True)
 def reset_filters(n_clicks):
+    """Reset filters.
+
+    Inputs:
+        n_clicks: int
+            Number of clicks on button.
+
+    Outputs:
+        value: str
+            Empty string as Zone selected.
+        value: str
+            Empty string as Feature selected.
+        n_clicks: int
+            Number of clicks on button.
+
+    version: 1.0 - Initial version. """
     return ["", "", "1"]
 
 # ------------------------------------------------------------------------------
@@ -149,6 +177,19 @@ def reset_filters(n_clicks):
     [Input('select-deparment', 'value')],
     prevent_initial_call=True)
 def update_municipalities(departamento):
+    """Update municipalities based on deparment selected.
+
+    Input:
+        departamento: str
+            Deparment selected.
+
+    Output:
+        value: str
+            Empty string as Municipality selected.
+        options: list
+            List of municipalities.
+
+    version: 1.0 - Initial version. """
     lstMunicipios = []
     try:
         if departamento:
@@ -186,6 +227,35 @@ def update_municipalities(departamento):
     prevent_initial_call=True
 )
 def update_plots(zona, departamento, municipio, feature, n_clicks):
+    """Update plots.
+
+    Inputs:
+        zona: str
+            Zone selected.
+        departamento: str
+            Deparment selected.
+        municipio: str
+            Municipality selected.
+        feature: str
+            Feature selected.
+        n_clicks: int
+            Number of clicks on button.
+
+    Outputs:
+        id-univariate-plot: html.Div
+            Univariate plot.
+        id-multivariate-plot: html.Div
+            Multivariate plot.
+        id-choropleth-map: html.Div
+            Choropleth map.
+        choropleth-title: str
+            Choropleth map title.
+        id-crops-by-region-barplot: html.Div
+            Crops by region barplot.
+        id-crops-types-by-region-barplot: html.Div
+            Crops types by region barplot.
+
+    version: 1.0 - Initial version. """
     if feature:
         variable = feature
         for item in lstVariables:
@@ -257,6 +327,17 @@ def update_plots(zona, departamento, municipio, feature, n_clicks):
     [Input('btnClearHidden', 'n_clicks')],
     prevent_initial_call=True)
 def reset_plots(feature):
+    """Trigger to reset plots.
+
+    Input:
+        feature: str
+            Feature selected.
+
+    Output:
+        n_clicks: int
+            Number of clicks on button.
+
+    version: 1.0 - Initial version. """
     return ["1"]
 
 # ------------------------------------------------------------------------------

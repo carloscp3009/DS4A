@@ -13,6 +13,16 @@ from utils.load_data import Connection
 class multivariate_plot:
     def __init__(
             self, tipo_agregado='cod_municipio', agregado=None):
+        """Constructor of the class
+
+        Inputs:
+            tipo_agregado: str, type of aggregation
+            agregado: str, aggregation
+
+        Outputs:
+            None
+
+        Version: 1.0 - Initial version """
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
         self.label = "Análisis multivariado de outliers"
@@ -21,8 +31,17 @@ class multivariate_plot:
     # --------------------------------------------------------------------------
 
     def outliers_iforest(self):
+        """Returns the outliers using Isolation Forest
+
+        Inputs:
+            None
+
+            Outputs:
+                outliers: list
+                    List of outliers
+
+        Version: 1.0 - Initial version """
         try:
-            # df_region = self.datos.copy()
             df_region = self.datos
 
             # Normalización de los datos
@@ -90,13 +109,21 @@ class multivariate_plot:
     # --------------------------------------------------------------------------
 
     def get_layout(self, num_samples=0):
-        """Returns the layout of the plot"""
+        """Returns the layout of the component
+
+        Inputs:
+            num_samples: int, number of samples
+
+        Outputs:
+            layout: dict, layout of the component
+
+            Version: 1.0 - Initial version """
         layout = dict(
             autosize=True,
             font={'color': '#ffffff'},
             margin=dict(l=35, r=0, t=40, b=30),
-            plot_bgcolor='rgba(48, 48, 48, 1)',
-            paper_bgcolor='rgba(48, 48, 48, 1)',
+            plot_bgcolor='rgba(48, 48, 48, 0)',
+            paper_bgcolor='rgba(48, 48, 48, 0)',
             bgcolor='rgba(0, 0, 0, 0.5)',
             legend=dict(
                 orientation="h",
@@ -130,6 +157,15 @@ class multivariate_plot:
     # --------------------------------------------------------------------------
 
     def figura(self):
+        """Returns the figure of the component
+
+        Inputs:
+            None
+
+        Outputs:
+            figura: dict, figure of the component
+
+        Version: 1.0 - Initial version """
         try:
             query = """
                 SELECT
@@ -204,6 +240,15 @@ class multivariate_plot:
     # --------------------------------------------------------------------------
 
     def display(self):
+        """Returns the display of the component
+
+        Inputs:
+            None
+
+        Outputs:
+            layout: dict, layout of the component
+
+        Version: 1.0 - Initial version """
         layout = dcc.Graph(
             className="mb-1",
             figure=multivariate_plot.figura(self),

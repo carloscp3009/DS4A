@@ -3,6 +3,8 @@ from components.univariate_plot import univariate_plot
 from components.multivariate_plot import multivariate_plot
 from dash import html
 
+# ------------------------------------------------------------------------------
+
 variable_plot = univariate_plot()
 multivariable_plot = multivariate_plot("cod_municipio", "None")
 

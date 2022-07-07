@@ -1,8 +1,8 @@
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+
 from components.choropleth_plot import choropleth_plot
-# from utils.map import map
 from components.tabs import tabs
+from dash import html
 
 # ------------------------------------------------------------------------------
 

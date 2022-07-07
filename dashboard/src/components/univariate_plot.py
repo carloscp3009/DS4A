@@ -13,6 +13,20 @@ class univariate_plot:
                 variable='acidez',
                 tipo_agregado='cod_municipio',
                 agregado=None):
+        """Initializes the class
+
+        Inputs:
+            variable: str
+                Variable to plot
+            tipo_agregado: str
+                Type of aggregation to use
+            agregado: str
+                Value of the aggregation
+
+        Outputs:
+            None
+
+        Version: 1.0 - Initial version """
         self.tipo_agregado = tipo_agregado
         self.agregado = agregado
         self.variable = variable
@@ -21,13 +35,23 @@ class univariate_plot:
     # --------------------------------------------------------------------------
 
     def get_layout(self, num_samples=0):
-        """Returns the layout of the plot"""
+        """Returns the layout of the plot.
+
+        Inputs:
+            num_samples: int
+                Number of samples in the data
+
+        Outputs:
+            layout: dict
+                Layout of the plot
+
+        Version: 1.0 - Initial version """
         layout = dict(
             autosize=True,
             font={'color': '#ffffff'},
             margin=dict(l=35, r=0, t=40, b=30),
-            plot_bgcolor='rgba(48, 48, 48, 1)',
-            paper_bgcolor='rgba(48, 48, 48, 1)',
+            plot_bgcolor='rgba(48, 48, 48, 0)',
+            paper_bgcolor='rgba(48, 48, 48, 0)',
             bgcolor='rgba(0, 0, 0, 0.5)',
             legend=dict(
                 orientation="h",
@@ -62,6 +86,16 @@ class univariate_plot:
     # --------------------------------------------------------------------------
 
     def figura(self):
+        """Returns the figure of the component.
+
+        Inputs:
+            None
+
+        Outputs:
+            fig: dict
+                Figure of the component
+
+        Version: 1.0 - Initial version """
         try:
             query = f"""
                 SELECT
@@ -136,10 +170,18 @@ class univariate_plot:
     # --------------------------------------------------------------------------
 
     def display(self):
-        """Displays the card with label, kpi and a mini-plot from the data"""
+        """Returns the display of the component.
+
+        Inputs:
+            None
+
+        Outputs:
+            layout: dict
+                Layout of the component
+
+        Version: 1.0 - Initial version """
         layout = dcc.Graph(
             className="mb-1",
             figure=univariate_plot.figura(self),
-            # id=f"{self.variable}-plot",
         )
         return layout

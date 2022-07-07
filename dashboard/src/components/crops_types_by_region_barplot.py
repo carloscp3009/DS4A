@@ -10,6 +10,16 @@ from utils.load_data import Connection
 
 class Crops_types_by_region_barplot:
     def __init__(self, tipo_agregado=None, agregado=None):
+        """Initializes the class
+
+        Inputs:
+            tipo_agregado: str
+                The type of aggregation to use.
+                Possible values: 'zona', 'cod_departamento', 'cod_municipio'
+            agregado: str
+                The value of the aggregation.
+
+        Version: 1.0 - Initial version """
         self.agregado = agregado
         self.tipo_agregado = tipo_agregado
         self.title = 'Main crops in Colombia'
@@ -17,6 +27,16 @@ class Crops_types_by_region_barplot:
     # --------------------------------------------------------------------------
 
     def figura(self):
+        """Create a crops bar plot of the given region.
+
+        Inputs:
+            None
+
+        Outputs:
+            figura: dict
+                Layout of the crops bar plot.
+
+        Version: 1.0 - Initial version """
         try:
             if self.tipo_agregado == 'zona':
                 query = f"""
@@ -94,9 +114,6 @@ class Crops_types_by_region_barplot:
                 ),
                 yaxis=dict(autorange='reversed'),
             )
-            # fig = Figure()
-            # layout = self.get_layout(num_samples)
-            # fig = dict(data=datadict, layout=layout)
         except Exception as e:
             print("crops_types_by_region_barplot.figure:", e)
         return fig
@@ -104,7 +121,16 @@ class Crops_types_by_region_barplot:
     # --------------------------------------------------------------------------
 
     def display(self):
-        """Displays the card with label, kpi and a mini-plot from the data"""
+        """Return the crops bar plot.
+
+            Inputs:
+                None
+
+            Outputs:
+                layout: dict
+                    Layout of the crops bar plot.
+
+            Version: 1.0 - Initial version """
         layout = dcc.Graph(
             className="mb-1",
             figure=Crops_types_by_region_barplot.figura(self),

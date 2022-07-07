@@ -2,6 +2,7 @@ import os
 import json
 import plotly.express as px
 import pandas as pd
+
 from pathlib import Path
 from dash import dcc
 
@@ -12,6 +13,18 @@ from utils.load_data import Connection
 
 class choropleth_plot:
     def __init__(self, variable='acidez'):
+        """Create a choropleth plot of the given variable.
+
+        Inputs:
+            variable: str
+                Nombre de la variable a analizar.
+                Por defecto: acidez
+
+        Outputs:
+            None
+
+        Version: 1.0 - Initial release
+        """
         self.label = "Análisis multivariado de outliers"
         self.datos = None
         self.variable = variable
@@ -20,6 +33,19 @@ class choropleth_plot:
     # --------------------------------------------------------------------------
 
     def figura(self):
+        """Create a choropleth plot of the given variable.
+
+        Inputs:
+            variable: str
+                Nombre de la variable a analizar.
+                Por defecto: acidez
+
+        Outputs:
+            figura: dict
+                Layout of the choropleth plot.
+
+        Version: 1.0 - Initial release
+        """
         try:
             query = f"""
                 SELECT
@@ -83,6 +109,17 @@ class choropleth_plot:
     # --------------------------------------------------------------------------
 
     def display(self):
+        """Return the choropleth plot.
+
+        Inputs:
+            None
+
+        Outputs:
+            layout: dict
+                Layout of the choropleth plot.
+
+        Version: 1.0 - Initial release
+        """
         layout = dcc.Graph(
             # id='id-choropleth-map',
             className="h-100 mb-2",
