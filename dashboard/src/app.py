@@ -17,12 +17,12 @@ app = Dash(
 app.title = "Dashboard | Agrosavia"
 app._favicon = "favicon.png"
 
-USERNAME_PASSWORD_PAIRS = {
-    'agrosavia': 'team50',
-    'correlationone': 'team50',
-    'ds4a': 'team50'
-}
-auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
+# USERNAME_PASSWORD_PAIRS = {
+#     'agrosavia': 'team50',
+#     'correlationone': 'team50',
+#     'ds4a': 'team50'
+# }
+# auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
 
 # ------------------------------------------------------------------------------
 # App layout
