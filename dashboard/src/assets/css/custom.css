@@ -76,30 +76,30 @@
 }
 
 #id-choropleth-map {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 167px);
   width: 100%;
 }
 
 #right-col {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 167px);
 }
 
 #right-col .card {
   margin-top: 0px !important;
   border-left: 1px solid #444444;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 167px);
   overflow-x: hidden;
 }
 
 #id-univariate-plot,
 #id-multivariate-plot {
-  height: calc((100vh - 280px) / 2);
+  height: calc((100vh - 265px) / 2);
   width: 100%;
 }
 
 #id-crops-by-region-barplot div.dash-graph,
 #id-crops-types-by-region-barplot div.dash-graph {
-  height: calc((100vh - 216px) / 2);
+  height: calc((100vh - 200px) / 2);
   width: 100%;
 }
 
@@ -120,6 +120,7 @@
 #bottom-bar {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
+  padding: 0.5rem;
 }
 
 select {
