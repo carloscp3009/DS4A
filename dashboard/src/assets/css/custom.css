@@ -43,6 +43,7 @@
 
 .navbar {
   margin: 0 0.75rem;
+  padding: 7px;
 }
 
 .navbar .container {
@@ -53,16 +54,16 @@
 }
 
 #central-container {
-  height: calc(100vh - 140px);
-  padding-top: 70px;
+  height: calc(100vh - 130px);
+  padding-top: 55px;
   max-width: 100%;
   width: 100vw;
 }
 
 #left-col {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 160px);
   margin-left: -0.5rem;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 160px);
   position: fixed !important;
 }
 
@@ -76,30 +77,30 @@
 }
 
 #id-choropleth-map {
-  height: calc(100vh - 167px);
+  height: calc(100vh - 155px);
   width: 100%;
 }
 
 #right-col {
-  height: calc(100vh - 167px);
+  height: calc(100vh - 155px);
 }
 
 #right-col .card {
   margin-top: 0px !important;
   border-left: 1px solid #444444;
-  max-height: calc(100vh - 167px);
+  max-height: calc(100vh - 157px);
   overflow-x: hidden;
 }
 
 #id-univariate-plot,
 #id-multivariate-plot {
-  height: calc((100vh - 265px) / 2);
+  height: calc((100vh - 255px) / 2);
   width: 100%;
 }
 
 #id-crops-by-region-barplot div.dash-graph,
 #id-crops-types-by-region-barplot div.dash-graph {
-  height: calc((100vh - 200px) / 2);
+  height: calc((100vh - 192px) / 2);
   width: 100%;
 }
 
