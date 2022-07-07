@@ -282,6 +282,10 @@ crops = ['Aguacate', 'Arroz', 'Cacao', 'Café', 'Caucho', 'Caña de azucar',
 )
 def predict(ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio, ce, hierro_olsen, cobre, manganeso, zinc_olsen, boro, estado_select, tiempo, topografia, drenaje, riego, dpto, mun, clicks):
     # print(ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio, ce, hierro_olsen, cobre, manganeso, zinc_olsen, boro, estado_select, tiempo, topografia, drenaje, riego, geo)
+    # print(dpto, mun)
+    if ((estado_select == '0') or (tiempo == '0') or (topografia == '0') or (drenaje == '0') or (riego == '0') or (dpto == None) or (mun == "")):
+        cadena = "Por favor ingrese toda la información necesaria"
+        return [cadena]
     try:
         if mun:
             query = '''
@@ -316,14 +320,14 @@ def predict(ph, MO, fosforo, azufre, aluminio, calcio, magnesio, potasio, sodio,
     cultivos.append(sortedDict[15:20][0][0])
     # print(probabilidades)
     # print(cultivos)
-    cadena = [html.H5("Top Cultivo Sugeridos :"), 
+    cadena = [html.H5("Top 5 cultivos sugeridos :"), 
             "1. ", cultivos[0],html.Br(), 
             "2. ", cultivos[1],html.Br(), 
             "3. ", cultivos[2],html.Br(), 
             "4. ", cultivos[3],html.Br(), 
             "5. ", cultivos[4]
             ] 
-    print(cadena)
+    # print(cadena)
     return [cadena]
 
     # return [f"Cultivo Sugerido : {crops[predicted_crop[0]]}"]
